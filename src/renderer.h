@@ -6,28 +6,27 @@
 
 class Renderer {
  
-  
  public:
   
-  # Constructor
+  // Constructor
   Renderer(const std::size_t screen_width, const std::size_t screen_height);
   
-  # Desctructor
+  // Desctructor
   ~Renderer();
 
-  # Render the Ship (and meteors once implemented)
+  // Render the Ship (and meteors once implemented)
   void Render(Ship const ship);
   
-  # Update the score
+  // Update the score
   void UpdateWindowTitle(int score, int fps);
 
  private:
   
-  # SDL
+  // SDL
   SDL_Window   *sdl_window;
   SDL_Renderer *sdl_renderer;
 
-  # The Screen Height and Width to be rendered
+  // The Screen Height and Width to be rendered
   const std::size_t screen_width;
   const std::size_t screen_height;
   

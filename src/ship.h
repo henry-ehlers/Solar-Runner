@@ -10,4 +10,6 @@ private:
   float x_pos;
   float y_pos;
 
-}
+};
+
+#endif
