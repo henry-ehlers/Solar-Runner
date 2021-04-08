@@ -6,8 +6,9 @@
 #include <math.h>
 
 // Constructor
-Ship::Ship(int x_pos, int y_pos) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2), speed(2) {
-  this->cent_pos = std::make_tuple(x_pos, y_pos);
+Ship::Ship(int x_bound, int y_bound) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2), speed(5) {
+  this->dim_bounds = std::make_tuple(x_bound, y_bound);
+  this->cent_pos = std::make_tuple(x_bound/2, y_bound-2*ship_length);
   this->SetShipWing();
   this->SetShipBase();
   this->SetShipNose();
@@ -44,11 +45,20 @@ void Ship::SetShipBase(){
 
 //
 void Ship::BankLeft() {
-  UpdateInformation(-speed);
+  if (std::get<0>(ltip_pos) >= (0+20) ) {
+    UpdateInformation(-speed);
+  } else {
+    std::cout << "Something is wrong on the left\n";
+  }
+  
 };
 
 void Ship::BankRight() {
-  UpdateInformation(speed);
+  if (std::get<0>(rtip_pos) <= (std::get<0>(dim_bounds)-20) ) {
+    UpdateInformation(speed);
+  } else {
+    std::cout << "Something is wrong on the right\n";
+  }
 };
 
 void Ship::UpdateInformation(float x_delta) {

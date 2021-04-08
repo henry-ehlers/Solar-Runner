@@ -8,7 +8,9 @@
 int main() {
   
   // Set Properties of Game
-  int fps = 60;
+  int fps    = 60;
+  int width  = 320;
+  int height = 640;
   constexpr std::size_t SCREEN_WIDTH{320};
   constexpr std::size_t SCREEN_HEIGHT{640};
 
@@ -19,7 +21,7 @@ int main() {
   Controller controller = Controller();
   
   // Create Game and run it
-  Game game = Game(fps);
+  Game game = Game(fps, width, height);
   game.Run(renderer, controller);
 
   std::cout << "Game has terminated successfully!\n";

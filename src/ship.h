@@ -36,6 +36,7 @@ private:
   // The Ship's locations in 2D space
   int base_length{-1};
   float wing_length{-1};
+  std::tuple<int,int> dim_bounds;
   std::tuple<int,int> cent_pos;
   std::tuple<int,int> nose_pos;
   std::tuple<int,int> ltip_pos;

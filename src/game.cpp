@@ -4,7 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 
-Game::Game(int fps) : ship(160,600), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
+Game::Game(int fps, int width, int height) : ship(width,height), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
 
 void Game::Run(Renderer &renderer, Controller &controller) {
   

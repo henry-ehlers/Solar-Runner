@@ -13,7 +13,7 @@ class Game {
  public:
   
   // Constructor
-  Game(int fps);
+  Game(int fps, int width, int height);
   
   void Run(Renderer &renderer, Controller &controller);
 
