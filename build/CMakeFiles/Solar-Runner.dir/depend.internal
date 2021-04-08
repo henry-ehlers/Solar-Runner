@@ -52,6 +52,8 @@ CMakeFiles/Solar-Runner.dir/src/main.cpp.o
  /usr/include/SDL2/SDL_video.h
  /usr/include/SDL2/begin_code.h
  /usr/include/SDL2/close_code.h
+CMakeFiles/Solar-Runner.dir/src/meteor.cpp.o
+ /home/workspace/Solar-Runner/src/meteor.cpp
 CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o
  /home/workspace/Solar-Runner/src/renderer.cpp
  /home/workspace/Solar-Runner/src/renderer.h

@@ -9,8 +9,18 @@
 /home/workspace/Solar-Runner/src/main.cpp
 iostream
 -
+unistd.h
+-
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
+
+/home/workspace/Solar-Runner/src/renderer.cpp
+renderer.h
+/home/workspace/Solar-Runner/src/renderer.h
+iostream
+-
+string
+-
 
 /home/workspace/Solar-Runner/src/renderer.h
 SDL.h

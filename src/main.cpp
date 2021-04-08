@@ -1,13 +1,24 @@
 #include <iostream>
+#include<unistd.h>
+
 #include "renderer.h"
 
 int main() {
-  constexpr std::size_t kFramesPerSecond{60};
-  constexpr std::size_t kMsPerFrame{1000 / kFramesPerSecond};
-  constexpr std::size_t kScreenWidth{640};
-  constexpr std::size_t kScreenHeight{640};
+  
+  // Set Constants of Renderer
+  constexpr std::size_t FRAMES_PER_SECOND{60};
+  constexpr std::size_t PER_SECOND{1000 / FRAMES_PER_SECOND};
+  constexpr std::size_t SCREEN_WIDTH{640};
+  constexpr std::size_t SCREEN_HEIGHT{640};
 
-  Renderer renderer(kScreenWidth, kScreenHeight);
+  // Create Renderer
+  Renderer renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
+  
+  // Sleep for X second
+  unsigned int microsecond = 1000000;
+  usleep(10 * microsecond);//sleeps for 3 second
+  
   std::cout << "Game has terminated successfully!\n";
   return 0;
+  
 }

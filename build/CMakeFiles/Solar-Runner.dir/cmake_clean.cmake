@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Solar-Runner.dir/src/controller.cpp.o"
   "CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o"
   "CMakeFiles/Solar-Runner.dir/src/ship.cpp.o"
+  "CMakeFiles/Solar-Runner.dir/src/meteor.cpp.o"
   "Solar-Runner.pdb"
   "Solar-Runner"
 )

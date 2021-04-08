@@ -204,6 +204,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/Solar-Runner.dir/build.make CMakeFiles/Solar-Runner.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/meteor.o: src/meteor.cpp.o
+
+.PHONY : src/meteor.o
+
+# target to build an object file
+src/meteor.cpp.o:
+	$(MAKE) -f CMakeFiles/Solar-Runner.dir/build.make CMakeFiles/Solar-Runner.dir/src/meteor.cpp.o
+.PHONY : src/meteor.cpp.o
+
+src/meteor.i: src/meteor.cpp.i
+
+.PHONY : src/meteor.i
+
+# target to preprocess a source file
+src/meteor.cpp.i:
+	$(MAKE) -f CMakeFiles/Solar-Runner.dir/build.make CMakeFiles/Solar-Runner.dir/src/meteor.cpp.i
+.PHONY : src/meteor.cpp.i
+
+src/meteor.s: src/meteor.cpp.s
+
+.PHONY : src/meteor.s
+
+# target to generate assembly for a file
+src/meteor.cpp.s:
+	$(MAKE) -f CMakeFiles/Solar-Runner.dir/build.make CMakeFiles/Solar-Runner.dir/src/meteor.cpp.s
+.PHONY : src/meteor.cpp.s
+
 src/renderer.o: src/renderer.cpp.o
 
 .PHONY : src/renderer.o
@@ -276,6 +303,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/meteor.o"
+	@echo "... src/meteor.i"
+	@echo "... src/meteor.s"
 	@echo "... src/renderer.o"
 	@echo "... src/renderer.i"
 	@echo "... src/renderer.s"

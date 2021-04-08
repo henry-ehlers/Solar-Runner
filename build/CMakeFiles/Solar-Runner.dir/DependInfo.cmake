@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/workspace/Solar-Runner/src/controller.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/controller.cpp.o"
   "/home/workspace/Solar-Runner/src/game.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/game.cpp.o"
   "/home/workspace/Solar-Runner/src/main.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/main.cpp.o"
+  "/home/workspace/Solar-Runner/src/meteor.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/meteor.cpp.o"
   "/home/workspace/Solar-Runner/src/renderer.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o"
   "/home/workspace/Solar-Runner/src/ship.cpp" "/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir/src/ship.cpp.o"
   )
