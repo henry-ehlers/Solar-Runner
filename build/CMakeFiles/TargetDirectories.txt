@@ -1,0 +1,3 @@
+/home/workspace/Solar-Runner/build/CMakeFiles/rebuild_cache.dir
+/home/workspace/Solar-Runner/build/CMakeFiles/Solar-Runner.dir
+/home/workspace/Solar-Runner/build/CMakeFiles/edit_cache.dir
