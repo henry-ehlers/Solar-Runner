@@ -9,8 +9,6 @@ class Controller {
   
   void HandleInput(bool &running, Ship &ship) const;
   
-private:
-  
-  void ChangeDirection(Ship &ship, Ship::Direction input) const
+};
 
 #endif

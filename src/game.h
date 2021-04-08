@@ -5,6 +5,7 @@
 #include "SDL.h"
 
 #include "renderer.h"
+#include "controller.h"
 #include "ship.h"
 
 class Game {
@@ -12,11 +13,9 @@ class Game {
  public:
   
   // Constructor
-  Game();
+  Game(int fps);
   
-  void Run(Renderer &renderer);
-  int GetScore() const;
-  int GetSize() const;
+  void Run(Renderer &renderer, Controller &controller);
 
  private:
   
@@ -27,11 +26,10 @@ class Game {
 //   std::uniform_int_distribution<int> random_w;
 //   std::uniform_int_distribution<int> random_h;
 
+  const std::size_t FRAMES_PER_SECOND;
+  const std::size_t KM_PER_FRAME;
   int score{-1};
   bool running;
-  
-  void PlaceMeteor();
-  void Update();
 };
 
 #endif

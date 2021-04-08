@@ -1,9 +1,10 @@
-#include controller.h
+#include "controller.h"
+
 #include <iostream>
 #include "SDL.h"
 #include "ship.h"
 
-void Controller::HandleInput(bool &running, ship &ship) const {
+void Controller::HandleInput(bool &running, Ship &ship) const {
   
   SDL_Event e;
   
@@ -17,17 +18,13 @@ void Controller::HandleInput(bool &running, ship &ship) const {
       switch (e.key.keysym.sym) {          
 
         case SDLK_LEFT:
-          ChangeDirection(snake, Snake::Direction::kLeft,Snake::Direction::kRight);
+          ship.BankLeft();
           break;
 
         case SDLK_RIGHT:
-          ChangeDirection(snake, Snake::Direction::kRight,Snake::Direction::kLeft);
+          ship.BankRight();
           break;
       }
     }
   }
-}
-
-void Controller::ChangeDirection(Ship &ship, Ship::Direction input) const {
-  snake.direction = input;
 }

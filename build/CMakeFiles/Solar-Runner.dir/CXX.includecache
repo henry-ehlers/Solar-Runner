@@ -6,13 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/workspace/Solar-Runner/src/game.cpp
-game.h
-/home/workspace/Solar-Runner/src/game.h
+/home/workspace/Solar-Runner/src/controller.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
-iostream
--
 
 /home/workspace/Solar-Runner/src/game.h
 random
@@ -21,8 +17,22 @@ SDL.h
 /home/workspace/Solar-Runner/src/SDL.h
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
+controller.h
+/home/workspace/Solar-Runner/src/controller.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
+
+/home/workspace/Solar-Runner/src/main.cpp
+iostream
+-
+unistd.h
+-
+ship.h
+/home/workspace/Solar-Runner/src/ship.h
+game.h
+/home/workspace/Solar-Runner/src/game.h
+renderer.h
+/home/workspace/Solar-Runner/src/renderer.h
 
 /home/workspace/Solar-Runner/src/renderer.h
 SDL.h

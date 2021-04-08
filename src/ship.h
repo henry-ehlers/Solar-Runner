@@ -22,11 +22,14 @@ public:
   std::tuple<int,int> GetRtipPos(){return this->rtip_pos;};
   
   // Update based on player input
+  void BankLeft();
+  void BankRight();
   
 private:
   
   // Set Ship Constants
   float nose_angle; // to radians
+  float speed;
   int ship_length ;
   int fin_length;
   
@@ -44,6 +47,9 @@ private:
   void SetShipRtip();
   void SetShipWing();
   void SetShipBase();
+  
+  // Change Stuff
+  void UpdateInformation(float x_delta);
 
 };
 

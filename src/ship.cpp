@@ -6,7 +6,7 @@
 #include <math.h>
 
 // Constructor
-Ship::Ship(int x_pos, int y_pos) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2) {
+Ship::Ship(int x_pos, int y_pos) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2), speed(2) {
   this->cent_pos = std::make_tuple(x_pos, y_pos);
   this->SetShipWing();
   this->SetShipBase();
@@ -42,3 +42,17 @@ void Ship::SetShipBase(){
   this->base_length = wing_length / std::cos(nose_angle);
 };
 
+//
+void Ship::BankLeft() {
+  UpdateInformation(-speed);
+};
+
+void Ship::BankRight() {
+  UpdateInformation(speed);
+};
+
+void Ship::UpdateInformation(float x_delta) {
+  std::get<0>(nose_pos) += x_delta;
+  std::get<0>(ltip_pos) += x_delta;
+  std::get<0>(rtip_pos) += x_delta;
+};
