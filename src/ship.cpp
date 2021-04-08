@@ -8,7 +8,7 @@
 // Constructor
 Ship::Ship(int x_bound, int y_bound) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2), speed(5) {
   this->dim_bounds = std::make_tuple(x_bound, y_bound);
-  this->cent_pos = std::make_tuple(x_bound/2, y_bound-2*ship_length);
+  this->cent_pos = std::make_tuple(x_bound/2, y_bound-4*ship_length);
   this->SetShipWing();
   this->SetShipBase();
   this->SetShipNose();
@@ -50,7 +50,6 @@ void Ship::BankLeft() {
   } else {
     std::cout << "Something is wrong on the left\n";
   }
-  
 };
 
 void Ship::BankRight() {
