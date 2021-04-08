@@ -1,6 +1,8 @@
 #include <iostream>
-#include<unistd.h>
+#include <unistd.h>
 
+#include "ship.h"
+#include "game.h"
 #include "renderer.h"
 
 int main() {
@@ -13,11 +15,14 @@ int main() {
 
   // Create Renderer
   Renderer renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
-  renderer.RenderShip();
-  // Sleep for X second
-  unsigned int microsecond = 1000000;
-  usleep(10 * microsecond);//sleeps for 3 second
   
+  // Create Controller
+  // Controller controller();
+  
+  // Create Game and run it
+  Game game = Game();
+  game.Run(renderer);
+
   std::cout << "Game has terminated successfully!\n";
   return 0;
   

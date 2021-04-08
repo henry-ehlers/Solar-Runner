@@ -6,27 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/home/workspace/Solar-Runner/src/main.cpp
+/home/workspace/Solar-Runner/src/game.cpp
+game.h
+/home/workspace/Solar-Runner/src/game.h
+ship.h
+/home/workspace/Solar-Runner/src/ship.h
 iostream
 -
-unistd.h
--
-renderer.h
-/home/workspace/Solar-Runner/src/renderer.h
 
-/home/workspace/Solar-Runner/src/renderer.cpp
+/home/workspace/Solar-Runner/src/game.h
+random
+-
+SDL.h
+/home/workspace/Solar-Runner/src/SDL.h
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
-tuple
--
-iostream
--
-string
--
-math.h
--
 
 /home/workspace/Solar-Runner/src/renderer.h
 SDL.h
@@ -34,23 +30,9 @@ SDL.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
 
-/home/workspace/Solar-Runner/src/ship.cpp
-ship.h
 /home/workspace/Solar-Runner/src/ship.h
 tuple
 -
-iostream
--
-string
--
-math.h
--
-
-/home/workspace/Solar-Runner/src/ship.h
-tuple
--
-renderer.h
-/home/workspace/Solar-Runner/src/renderer.h
 
 /usr/include/SDL2/SDL.h
 SDL_main.h

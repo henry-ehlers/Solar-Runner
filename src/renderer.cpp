@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include "ship.h"
+
 #include <tuple>
 #include <iostream>
 #include <string>
@@ -37,7 +38,7 @@ Renderer::~Renderer() {
 
 };
 
-void Renderer::RenderShip() {
+void Renderer::RenderShip(Ship &ship) {
   
   // Set the color to be drawn
   SDL_SetRenderDrawColor(this->sdl_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -48,20 +49,10 @@ void Renderer::RenderShip() {
   //Setting the actual draw color.
   SDL_SetRenderDrawColor(this->sdl_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
   
-  // Get Location and Shape of ship (placeholder)
-  int center_x = 320/2;
-  int center_y = 640/2;
-  float nose_angle = 35 * 0.0174533; // to radians
-  int ship_length = 10;
-  int fin_length = 2;
-  int body_length = ship_length - fin_length;
-  float wing_length = ship_length / std::sin(nose_angle/2);
-  int base_length = wing_length / std::cos(nose_angle);
-  
-  
-  std::tuple<int, int> nose_pos = std::make_tuple(center_x                , center_y - ship_length/2);
-  std::tuple<int, int> lfin_pos = std::make_tuple(center_x - ship_length/2, center_y + base_length/2);
-  std::tuple<int, int> rfin_pos = std::make_tuple(center_x + ship_length/2, center_y + base_length/2);
+  // Get The necessary tuples
+  std::tuple<int,int> nose_pos = ship.GetNosePos();
+  std::tuple<int,int> ltip_pos = ship.GetLtipPos();
+  std::tuple<int,int> rtip_pos = ship.GetRtipPos();
   
   // Drawing the lines we want: 
   // inspiration for implementation: https://gist.github.com/queercat/f8069b3b69178bdf3787d2b77f59551e
@@ -69,18 +60,23 @@ void Renderer::RenderShip() {
   // 0: renderer | int x1 | int y1 | int x2 | int y2
   
   std::cout << std::get<0>(nose_pos) << " " << std::get<1>(nose_pos) << "\n";
-  std::cout << std::get<0>(lfin_pos) << " " << std::get<1>(lfin_pos) << "\n";
-  std::cout << std::get<0>(rfin_pos) << " " << std::get<1>(rfin_pos) << "\n";
+  std::cout << std::get<0>(ltip_pos) << " " << std::get<1>(ltip_pos) << "\n";
+  std::cout << std::get<0>(rtip_pos) << " " << std::get<1>(rtip_pos) << "\n";
   
+  // Render Nose to Ltip
   SDL_RenderDrawLine(this->sdl_renderer, 
                      std::get<0>(nose_pos), std::get<1>(nose_pos), 
-                     std::get<0>(lfin_pos), std::get<1>(lfin_pos));
+                     std::get<0>(ltip_pos), std::get<1>(ltip_pos));
+  
+  // Render ltip to rtip
   SDL_RenderDrawLine(this->sdl_renderer, 
-                     std::get<0>(rfin_pos), std::get<1>(rfin_pos), 
-                     std::get<0>(lfin_pos), std::get<1>(lfin_pos));
+                     std::get<0>(rtip_pos), std::get<1>(rtip_pos), 
+                     std::get<0>(ltip_pos), std::get<1>(ltip_pos));
+  
+  // Render tip to rtip
   SDL_RenderDrawLine(this->sdl_renderer, 
                      std::get<0>(nose_pos), std::get<1>(nose_pos), 
-                     std::get<0>(rfin_pos), std::get<1>(rfin_pos));
+                     std::get<0>(rtip_pos), std::get<1>(rtip_pos));
   
   //Update the Renderer.
   SDL_RenderPresent(this->sdl_renderer);

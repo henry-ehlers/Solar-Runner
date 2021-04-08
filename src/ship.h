@@ -2,27 +2,38 @@
 #define SHIP_H
 
 #include <tuple>
-#include "renderer.h"
+
+/*
+DO NOT INCLUDE RENDERER HERE. it cause a cyclic dependence as outline here:
+https://stackoverflow.com/questions/23347826/classes-have-not-been-declared-but-they-were-included
+*/
 
 class Ship {
   
 public:
   
+  // Concstructor and Destructor
   Ship(int x_pos, int y_pos);
-  ~Ship();
+  //~Ship();
+  
+  // Getters
+  std::tuple<int,int> GetNosePos(){return this->nose_pos;};
+  std::tuple<int,int> GetLtipPos(){return this->ltip_pos;};
+  std::tuple<int,int> GetRtipPos(){return this->rtip_pos;};
+  
+  // Update based on player input
   
 private:
   
   // Set Ship Constants
-  float const nose_angle = 30 * 0.0174533; // to radians
-  int const ship_length = 10;
-  int const fin_length = 2;
+  float nose_angle; // to radians
+  int ship_length ;
+  int fin_length;
   
   // The Ship's locations in 2D space
-  int x_pos;
-  int y_pos;
   int base_length{-1};
   float wing_length{-1};
+  std::tuple<int,int> cent_pos;
   std::tuple<int,int> nose_pos;
   std::tuple<int,int> ltip_pos;
   std::tuple<int,int> rtip_pos;

@@ -3,6 +3,7 @@
 
 #include <random>
 #include "SDL.h"
+
 #include "renderer.h"
 #include "ship.h"
 
@@ -13,22 +14,22 @@ class Game {
   // Constructor
   Game();
   
-  void Run(Renderer &renderer, std::size_t frame_duration);
+  void Run(Renderer &renderer);
   int GetScore() const;
   int GetSize() const;
 
  private:
   
   Ship ship;
-  
 
 //   std::random_device dev;
 //   std::mt19937 engine;
 //   std::uniform_int_distribution<int> random_w;
 //   std::uniform_int_distribution<int> random_h;
 
-  int score{0};
-
+  int score{-1};
+  bool running;
+  
   void PlaceMeteor();
   void Update();
 };
