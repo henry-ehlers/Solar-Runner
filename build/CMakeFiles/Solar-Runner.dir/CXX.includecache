@@ -6,19 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/workspace/Solar-Runner/src/ship.cpp
-ship.h
-/home/workspace/Solar-Runner/src/ship.h
-tuple
--
-iostream
--
-string
--
-math.h
--
+/home/workspace/Solar-Runner/src/meteor.cpp
+meteor.h
+/home/workspace/Solar-Runner/src/meteor.h
 
-/home/workspace/Solar-Runner/src/ship.h
+/home/workspace/Solar-Runner/src/meteor.h
 tuple
 -
 

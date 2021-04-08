@@ -14,12 +14,12 @@ Ship::Ship(int x_bound, int y_bound) : nose_angle(30 * 0.0174533), ship_length(1
   this->SetShipNose();
   this->SetShipLtip();
   this->SetShipRtip();
-}
+};
 
 // Calculate the Location of the Ship's nose based on x/y and height
 void Ship::SetShipNose() {
   this->nose_pos = std::make_tuple(std::get<0>(cent_pos), std::get<1>(cent_pos) - ship_length/2);
-}
+};
 
 // Calculate the location of the left wing tip based on height, nose_angle, and x/y position
 void Ship::SetShipLtip(){

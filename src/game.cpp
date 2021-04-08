@@ -9,23 +9,30 @@ Game::Game(int fps, int width, int height) : ship(width,height), FRAMES_PER_SECO
 void Game::Run(Renderer &renderer, Controller &controller) {
   
   // Set a bunch of FPS-related
+  // based on template code provided by udacity:
+  // https://github.com/udacity/CppND-Capstone-Snake-Game
   Uint32 title_timestamp = SDL_GetTicks();
   Uint32 frame_start;
   Uint32 frame_end;
   Uint32 frame_duration;
   
-  int frame_count = 0;
-  this->running  = true;
-  
+  this->running = true;
   while (this->running) {
+    
+    // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
+    
+    // Lister for controller / keyboard input
     controller.HandleInput(running, ship);
+    
+    // Render changes in 
     renderer.RenderShip(ship);
+    
+    // Debug print
     std::cout << "running\n";
     
     // Keep track of how long each loop through the input/update/render cycle
     frame_end = SDL_GetTicks();
-    frame_count++;
     frame_duration = frame_end - frame_start;
 
     // If the time for this frame is too small (i.e. frame_duration is
@@ -34,6 +41,6 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     if (frame_duration < KM_PER_FRAME) {
       SDL_Delay(KM_PER_FRAME - frame_duration);
     }
-
+    
   };
 };
