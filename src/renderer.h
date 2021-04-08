@@ -15,7 +15,9 @@ class Renderer {
   ~Renderer();
 
   // Render the Ship (and meteors once implemented)
-  void Render(Ship const ship);
+  void Render();
+  // Individual Rendering functionn
+  void RenderShip();
   
   // Update the score
   void UpdateWindowTitle(int score, int fps);
@@ -29,6 +31,8 @@ class Renderer {
   // The Screen Height and Width to be rendered
   const std::size_t screen_width;
   const std::size_t screen_height;
+  
+  
   
 };
 

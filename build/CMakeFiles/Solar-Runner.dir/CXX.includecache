@@ -17,9 +17,15 @@ renderer.h
 /home/workspace/Solar-Runner/src/renderer.cpp
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
+ship.h
+/home/workspace/Solar-Runner/src/ship.h
+tuple
+-
 iostream
 -
 string
+-
+math.h
 -
 
 /home/workspace/Solar-Runner/src/renderer.h
@@ -28,7 +34,23 @@ SDL.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
 
+/home/workspace/Solar-Runner/src/ship.cpp
+ship.h
 /home/workspace/Solar-Runner/src/ship.h
+tuple
+-
+iostream
+-
+string
+-
+math.h
+-
+
+/home/workspace/Solar-Runner/src/ship.h
+tuple
+-
+renderer.h
+/home/workspace/Solar-Runner/src/renderer.h
 
 /usr/include/SDL2/SDL.h
 SDL_main.h
