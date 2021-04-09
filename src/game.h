@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include <random>
+#include <tuple>
+
 #include "SDL.h"
 
 #include "renderer.h"
@@ -13,7 +15,7 @@ class Game {
  public:
   
   // Constructor
-  Game(int fps, int width, int height);
+  Game(const int fps, const std::tuple<int,int> xy_bounds);
   
   void Run(Renderer &renderer, Controller &controller);
 

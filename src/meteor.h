@@ -11,10 +11,9 @@ public:
   
   // Constructor
   Meteor(std::tuple<int,int> location, std::tuple<int,int> bounds, int size, int speed, float rotation);
-  //~Meteor(){}
+  ~Meteor(){};
   
-  // Setters
-  void SetSpeed(int speed) { this->speed = speed; };
+  void Update();
   
   // Getters
   

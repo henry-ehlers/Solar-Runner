@@ -1,51 +1,48 @@
 #ifndef SHIP_H
 #define SHIP_H
 
+#include "object.h"
 #include <tuple>
-
+#include <vector>
 /*
 DO NOT INCLUDE RENDERER HERE. it cause a cyclic dependence as outline here:
 https://stackoverflow.com/questions/23347826/classes-have-not-been-declared-but-they-were-included
 */
 
-class Ship {
+class Ship : public Object {
   
 public:
   
   // Concstructor and Destructor
-  Ship(int x_pos, int y_pos);
-  //~Ship();
+  Ship(const std::tuple<int,int> xy_bounds);
+  ~Ship(){};
+  
+  void Update();
+  
+  // Setters
+  void InitializeVertices();
   
   // Getters
-  std::tuple<int,int> GetNosePos(){return this->nose_pos;};
-  std::tuple<int,int> GetLtipPos(){return this->ltip_pos;};
-  std::tuple<int,int> GetRtipPos(){return this->rtip_pos;};
   
   // Update based on player input
   void BankLeft();
   void BankRight();
   
-private:
+protected:
   
   // Set Ship Constants
   float nose_angle; // to radians
-  float speed;
   int ship_length ;
   int fin_length;
   
   // The Ship's locations in 2D space
   int base_length{-1};
   float wing_length{-1};
-  std::tuple<int,int> dim_bounds;
-  std::tuple<int,int> cent_pos;
-  std::tuple<int,int> nose_pos;
-  std::tuple<int,int> ltip_pos;
-  std::tuple<int,int> rtip_pos;
   
   // Define Ship's Critical Points
-  void SetShipNose();
-  void SetShipLtip();
-  void SetShipRtip();
+  std::tuple<int,int> SetShipNose();
+  std::tuple<int,int> SetShipLtip();
+  std::tuple<int,int> SetShipRtip();
   void SetShipWing();
   void SetShipBase();
   

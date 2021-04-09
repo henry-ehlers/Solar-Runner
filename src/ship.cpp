@@ -6,31 +6,36 @@
 #include <math.h>
 
 // Constructor
-Ship::Ship(int x_bound, int y_bound) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2), speed(5) {
-  this->dim_bounds = std::make_tuple(x_bound, y_bound);
-  this->cent_pos = std::make_tuple(x_bound/2, y_bound-4*ship_length);
+Ship::Ship(const std::tuple<int,int> xy_bounds) : nose_angle(30 * 0.0174533), ship_length(10), fin_length(2) {
+  this->bounds   = std::make_tuple(std::get<0>(xy_bounds), std::get<1>(xy_bounds));
+  this->location = std::make_tuple(std::get<0>(xy_bounds)/2, std::get<1>(xy_bounds)-(4*ship_length));
+  this->speed = 5;
   this->SetShipWing();
   this->SetShipBase();
-  this->SetShipNose();
-  this->SetShipLtip();
-  this->SetShipRtip();
+  this->InitializeVertices();
 };
 
+void Ship::InitializeVertices() {
+  this->vertices.push_back(this->SetShipNose());
+  this->vertices.push_back(this->SetShipRtip());
+  this->vertices.push_back(this->SetShipLtip());
+}
+
 // Calculate the Location of the Ship's nose based on x/y and height
-void Ship::SetShipNose() {
-  this->nose_pos = std::make_tuple(std::get<0>(cent_pos), std::get<1>(cent_pos) - ship_length/2);
+std::tuple<int,int> Ship::SetShipNose() {
+  return (std::make_tuple(std::get<0>(location), std::get<1>(location) - ship_length/2));
 };
 
 // Calculate the location of the left wing tip based on height, nose_angle, and x/y position
-void Ship::SetShipLtip(){
+std::tuple<int,int> Ship::SetShipLtip(){
   if (this->base_length < 0) {this->SetShipBase();};
-  this->ltip_pos = std::make_tuple(std::get<0>(cent_pos) - ship_length/2, std::get<1>(cent_pos) + base_length/2);
+  return(std::make_tuple(std::get<0>(location) - ship_length/2, std::get<1>(location) + base_length/2));
 };
 
 // Calculate the location of the right wing tip based on height, nose_angle, and x/y position
-void Ship::SetShipRtip(){
+std::tuple<int,int> Ship::SetShipRtip(){
   if (this->base_length < 0) {this->SetShipBase();};
-  this->rtip_pos = std::make_tuple(std::get<0>(cent_pos) + ship_length/2, std::get<1>(cent_pos) + base_length/2);
+  return(std::make_tuple(std::get<0>(location) + ship_length/2, std::get<1>(location) + base_length/2));
 };
 
 // Calculate the wing length based on ship length and nose_angle
@@ -45,7 +50,7 @@ void Ship::SetShipBase(){
 
 //
 void Ship::BankLeft() {
-  if (std::get<0>(ltip_pos) >= (0+20) ) {
+  if (std::get<0>(vertices[2]) >= (0+20) ) {
     UpdateInformation(-speed);
   } else {
     std::cout << "Something is wrong on the left\n";
@@ -53,7 +58,7 @@ void Ship::BankLeft() {
 };
 
 void Ship::BankRight() {
-  if (std::get<0>(rtip_pos) <= (std::get<0>(dim_bounds)-20) ) {
+  if (std::get<0>(vertices[1]) <= (std::get<0>(bounds)-20) ) {
     UpdateInformation(speed);
   } else {
     std::cout << "Something is wrong on the right\n";
@@ -61,7 +66,7 @@ void Ship::BankRight() {
 };
 
 void Ship::UpdateInformation(float x_delta) {
-  std::get<0>(nose_pos) += x_delta;
-  std::get<0>(ltip_pos) += x_delta;
-  std::get<0>(rtip_pos) += x_delta;
+  for (std::tuple<int,int> vertex : vertices) {
+    std::get<0>(vertex) += x_delta;
+  }
 };

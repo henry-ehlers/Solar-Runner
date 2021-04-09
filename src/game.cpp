@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <memory>
+#include <tuple>
 
-Game::Game(int fps, int width, int height) : ship(width,height), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
 
 void Game::Run(Renderer &renderer, Controller &controller) {
   

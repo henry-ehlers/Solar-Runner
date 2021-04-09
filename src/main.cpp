@@ -8,11 +8,10 @@
 int main() {
   
   // Set Properties of Game
-  int fps    = 60;
-  int width  = 320;
-  int height = 640;
-  constexpr std::size_t SCREEN_WIDTH{320};
-  constexpr std::size_t SCREEN_HEIGHT{640};
+  constexpr int fps = 60;
+  constexpr std::tuple<int,int> xy_bounds = std::make_tuple(320,640);
+  constexpr std::size_t SCREEN_WIDTH{  std::get<0>(xy_bounds) };
+  constexpr std::size_t SCREEN_HEIGHT{ std::get<1>(xy_bounds) };
 
   // Create Renderer
   Renderer renderer = Renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -21,7 +20,7 @@ int main() {
   Controller controller = Controller();
   
   // Create Game and run it
-  Game game = Game(fps, width, height);
+  Game game = Game(fps, xy_bounds);
   game.Run(renderer, controller);
 
   std::cout << "Game has terminated successfully!\n";

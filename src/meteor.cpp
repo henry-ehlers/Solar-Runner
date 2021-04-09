@@ -7,7 +7,7 @@ Meteor::Meteor(std::tuple<int,int> location, std::tuple<int,int> bounds, int siz
   this->location = location;
   this->bounds   = bounds; 
   this->rotation = rotation;
-  this->SetSpeed(speed);
+  this->speed    = speed;
   InitializeVertices();
 };
 
