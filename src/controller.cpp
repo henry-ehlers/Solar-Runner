@@ -4,7 +4,7 @@
 #include "SDL.h"
 #include "ship.h"
 
-void Controller::HandleInput(bool &running, Ship &ship) const {
+std::unique_ptr<Ship> Controller::HandleInput(bool &running, std::unique_ptr<Ship> ship) const {
   
   SDL_Event e;
   
@@ -18,13 +18,15 @@ void Controller::HandleInput(bool &running, Ship &ship) const {
       switch (e.key.keysym.sym) {          
 
         case SDLK_LEFT:
-          ship.BankLeft();
+          ship.get()->BankLeft();
           break;
 
         case SDLK_RIGHT:
-          ship.BankRight();
+          ship.get()->BankRight();
           break;
       }
     }
   }
+  
+  return std::move(ship);
 }

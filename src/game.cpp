@@ -6,7 +6,7 @@
 #include <memory>
 #include <tuple>
 
-Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
 
 void Game::Run(Renderer &renderer, Controller &controller) {
   
@@ -24,11 +24,19 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
     
+    std::cout << ship.get() << "\n";
+    
     // Lister for controller / keyboard input
-    controller.HandleInput(running, ship);
+    std::cout << "MOVING SHIP INTO THE CONTROLLER\n";
+    ship = controller.HandleInput(running, std::move(ship));
+    std::cout << "MOVED THE SHIP BACK INTO GAME.RUN()\n";
+    
+    std::cout << ship.get() << "\n";
     
     // Render changes in 
-    renderer.RenderObject(ship);
+    std::cout << "MOVING SHIP INTO THE RENDERER\n";
+    ship = renderer.RenderObject(std::move(ship));
+    std::cout << "MOVED THE SHIP BACK INTO GAME.RUN()\n";
     
     // Debug print
     std::cout << "running\n";

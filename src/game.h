@@ -21,7 +21,7 @@ class Game {
 
  private:
   
-  Ship ship;
+  std::unique_ptr<Ship> ship;
 
 //   std::random_device dev;
 //   std::mt19937 engine;

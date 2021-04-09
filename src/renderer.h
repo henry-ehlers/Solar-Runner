@@ -3,7 +3,9 @@
 
 #include "SDL.h"
 #include "ship.h"
+#include "meteor.h"
 
+#include <memory>
 
 class Renderer {
  
@@ -19,8 +21,8 @@ class Renderer {
   void Render();
   
   // Individual Rendering functionn
-  void RenderObject(Object &object);
-  
+  std::unique_ptr<Ship> RenderObject(std::unique_ptr<Ship> object);
+  std::unique_ptr<Meteor> RenderObject(std::unique_ptr<Meteor> object);
   // Update the score
   void UpdateWindowTitle(int score, int fps);
 

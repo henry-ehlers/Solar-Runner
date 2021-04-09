@@ -3,11 +3,12 @@
 
 #include "ship.h"
 
+#include <memory>
 class Controller {
   
  public:
   
-  void HandleInput(bool &running, Ship &ship) const;
+  std::unique_ptr<Ship> HandleInput(bool &running, std::unique_ptr<Ship> ship) const;
   
 };
 
