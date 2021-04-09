@@ -1,20 +1,30 @@
 #include "meteor.h"
 
-Meteor::Meteor(std::tuple<int,int> position, int radius, int speed, float rotation) {
-  this->cent_pos = position;
+#include <tuple>
+#include <vector>
+
+Meteor::Meteor(std::tuple<int,int> location, std::tuple<int,int> bounds, int size, int speed, float rotation) {
+  this->location = location;
+  this->bounds   = bounds; 
   this->rotation = rotation;
-  this->radius   = radius;
-  this->speed    = speed;
+  this->SetSpeed(speed);
+  InitializeVertices();
 };
 
-void Meteor::SetVertices(){
+void Meteor::InitializeVertices(){
+  
+  // Initialization ignored, despite the discussion and code example here:
+  // https://www.geeksforgeeks.org/initialize-a-vector-in-cpp-different-ways/
+  // Problems with tuples seemingly
   // see https://stackoverflow.com/questions/686353/random-float-number-generation
   //float random_initial_rotation = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/360));
   float random_initial_rotation = 0;
-  vertex_1 = std::make_tuple(std::get<0> - radius, std::get<1> - radius);
-  vertex_2 = std::make_tuple(std::get<0> + radius, std::get<1> - radius);
-  vertex_3 = std::make_tuple(std::get<0> + radius, std::get<1> + radius);
-  vertex_4 = std::make_tuple(std::get<0> - radius, std::get<1> + radius);
+  
+  vertices.push_back(std::make_tuple(std::get<0>(location) - size, std::get<1>(location) - size));
+  vertices.push_back(std::make_tuple(std::get<0>(location) + size, std::get<1>(location) - size));
+  vertices.push_back(std::make_tuple(std::get<0>(location) + size, std::get<1>(location) + size));
+  vertices.push_back(std::make_tuple(std::get<0>(location) - size, std::get<1>(location) + size));
+  
 };
 
 void Meteor::Rotate(){

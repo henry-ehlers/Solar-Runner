@@ -1,31 +1,33 @@
 #ifndef METEOR_H
 #define METEOR_H
 
+#include "object.h"
 #include <tuple>
+#include <vector>
 
-class Meteor {
+class Meteor : public Object {
 
 public:
   
-  Meteor(std::tuple<int,int> position, int radius, int speed, float rotation);
-  
+  // Constructor
+  Meteor(std::tuple<int,int> location, std::tuple<int,int> bounds, int size, int speed, float rotation);
   //~Meteor(){}
   
-  void Update();
+  // Setters
+  void SetSpeed(int speed) { this->speed = speed; };
   
-private:
+  // Getters
   
-  std::tuple<int,int> cent_pos;
-  std::tuple<int,int> vertex_1;
-  std::tuple<int,int> vertex_2;
-  std::tuple<int,int> vertex_3;
-  std::tuple<int,int> vertex_4;
-  float rotation;
-  int radius;
-  int speed;
+protected:
   
   //
-  void CalculateVertices();
+  void InitializeVertices();
+  
+  // Fields required in addition to those of the 'Object' class
+  float rotation;
+  int size;
+  
+  // Update-Specific methods
   void Move();
   void Rotate();
   
