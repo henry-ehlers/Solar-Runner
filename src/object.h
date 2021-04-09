@@ -11,10 +11,9 @@ class Object {
 
 public:
   
-  //virtual ~Object() = 0;
-  
-  // Key Virtual functions required for game ticks and intialization
-  virtual void Update() = 0;
+  // Making this virtual breaks the code. Unknown refence to vtable.
+  // I don't understand why
+  void Update();
   
   // Getters
   std::vector<std::tuple<int,int>> GetVertices() { return this->vertices; };
@@ -23,7 +22,7 @@ public:
 protected:
   
   // Key Virtual functions required for game ticks and intialization
-  virtual void InitializeVertices() = 0;
+  void InitializeVertices();
   
   // Key Fields required for a renderable object in this game
   std::vector<std::tuple<int,int>> vertices;

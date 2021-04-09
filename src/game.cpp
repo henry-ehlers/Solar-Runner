@@ -28,7 +28,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     controller.HandleInput(running, ship);
     
     // Render changes in 
-    renderer.RenderShip(ship);
+    renderer.RenderObject(ship);
     
     // Debug print
     std::cout << "running\n";

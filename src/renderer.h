@@ -19,7 +19,7 @@ class Renderer {
   void Render();
   
   // Individual Rendering functionn
-  void RenderShip(Ship &ship);
+  void RenderObject(Object &object);
   
   // Update the score
   void UpdateWindowTitle(int score, int fps);

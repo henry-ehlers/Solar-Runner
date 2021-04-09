@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/workspace/Solar-Runner/src/controller.cpp
-controller.h
-/home/workspace/Solar-Runner/src/controller.h
-iostream
--
-SDL.h
-/home/workspace/Solar-Runner/src/SDL.h
-ship.h
-/home/workspace/Solar-Runner/src/ship.h
-
 /home/workspace/Solar-Runner/src/controller.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
@@ -60,22 +50,6 @@ game.h
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
 
-/home/workspace/Solar-Runner/src/meteor.cpp
-meteor.h
-/home/workspace/Solar-Runner/src/meteor.h
-tuple
--
-vector
--
-
-/home/workspace/Solar-Runner/src/meteor.h
-object.h
-/home/workspace/Solar-Runner/src/object.h
-tuple
--
-vector
--
-
 /home/workspace/Solar-Runner/src/object.h
 tuple
 -
@@ -103,18 +77,6 @@ SDL.h
 /home/workspace/Solar-Runner/src/SDL.h
 ship.h
 /home/workspace/Solar-Runner/src/ship.h
-
-/home/workspace/Solar-Runner/src/ship.cpp
-ship.h
-/home/workspace/Solar-Runner/src/ship.h
-tuple
--
-iostream
--
-string
--
-math.h
--
 
 /home/workspace/Solar-Runner/src/ship.h
 object.h
