@@ -50,14 +50,16 @@ void Ship::SetShipBase(){
 
 //
 void Ship::BankLeft() {
+  std::cout << "BANK LEFT: \n";
   if (std::get<0>(vertices[2]) >= (0+20) ) {
-    UpdateInformation(-speed);
+    UpdateInformation((-speed));
   } else {
     std::cout << "Something is wrong on the left\n";
   }
 };
 
 void Ship::BankRight() {
+  std::cout << "BANK RIGHT: \n";
   if (std::get<0>(vertices[1]) <= (std::get<0>(bounds)-20) ) {
     UpdateInformation(speed);
   } else {
@@ -65,8 +67,9 @@ void Ship::BankRight() {
   }
 };
 
-void Ship::UpdateInformation(float x_delta) {
-  for (std::tuple<int,int> vertex : vertices) {
+void Ship::UpdateInformation(int x_delta) {
+  std::cout << "delta x: " << x_delta << "\n";
+  for (std::tuple<int,int> &vertex : vertices) {
     std::get<0>(vertex) += x_delta;
   }
 };

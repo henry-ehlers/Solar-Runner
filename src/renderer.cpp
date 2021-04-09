@@ -57,9 +57,7 @@ void Renderer::RenderObject(Object &object) {
   // inspiration for implementation: https://gist.github.com/queercat/f8069b3b69178bdf3787d2b77f59551e
   // the input (described here: https://wiki.libsdl.org/SDL_RenderDrawLine)
   // 0: renderer | int x1 | int y1 | int x2 | int y2
-  std::cout << "Size of Vector: " << size(vertices) << "\n";
   for (int index = 0; index < size(vertices); index++) {
-    std::cout << "index: " << index << " to " << (index + 1) % size(vertices) << "\n";
     SDL_RenderDrawLine(this->sdl_renderer, 
                        std::get<0>(vertices[index]), 
                        std::get<1>(vertices[index]), 

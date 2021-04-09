@@ -47,7 +47,7 @@ protected:
   void SetShipBase();
   
   // Change Stuff
-  void UpdateInformation(float x_delta);
+  void UpdateInformation(int x_delta);
 
 };
 
