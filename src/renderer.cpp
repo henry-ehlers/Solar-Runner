@@ -51,10 +51,7 @@ std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
   SDL_SetRenderDrawColor(this->sdl_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
   
   // Get The necessary tuples
-  std::cout << object.get() << "\n";
-  std::cout << "collecting the vertices\n";
   std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
-  std::cout <<  "vertices collected\n";
   
   // Iterate over each of the vertices
   for (int index = 0; index < size(vertices); index++) {
@@ -77,7 +74,7 @@ std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
   return std::move(object);
 }
 
-void Renderer::Render() {
+std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
   
   // Set the color to be drawn
   SDL_SetRenderDrawColor(this->sdl_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -85,9 +82,27 @@ void Renderer::Render() {
   // Clear the screen: very inefficient, i.e. we must redraw everything on every single frame, but hell whatever
   SDL_RenderClear(this->sdl_renderer);
 
-  //this->RenderShip(ship);
+  // Get The necessary tuples
+  std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
 
+  // Iterate over the ordered indeces and draw their lines
+  for (int index = 0; index < size(vertices); index++) {
+    
+    // Drawing the lines we want: 
+    // inspiration for implementation: https://gist.github.com/queercat/f8069b3b69178bdf3787d2b77f59551e
+    // the input (described here: https://wiki.libsdl.org/SDL_RenderDrawLine)
+    // 0: renderer | int x1 | int y1 | int x2 | int y2
+    SDL_RenderDrawLine(this->sdl_renderer, 
+                       std::get <0> ( vertices[ index ] ), 
+                       std::get <1> ( vertices[ index ] ), 
+                       std::get <0> ( vertices[(index + 1) % size(vertices)] ), 
+                       std::get <1> ( vertices[(index + 1) % size(vertices)] ) 
+     );
+    
+  };
   //Update the Renderer.
   SDL_RenderPresent(this->sdl_renderer);
+  
+  return std::move(object);
 
-}
+};

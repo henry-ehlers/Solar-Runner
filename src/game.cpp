@@ -6,7 +6,7 @@
 #include <memory>
 #include <tuple>
 
-Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps) {};
 
 void Game::Run(Renderer &renderer, Controller &controller) {
   
@@ -19,30 +19,37 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   Uint32 frame_duration;
   
   this->running = true;
+  this->score = 0;
+  bool test = true;
   while (this->running) {
     
     // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
+
+    // Spawn new Meteor
+    if (test) {
+      std::tuple<int,int> MeteorLocation = std::make_tuple(320/2, -10);
+      meteors.push_back(std::make_unique<Meteor>(MeteorLocation, this->screen_bounds, 10, 2, 0));
+      test = false;
+    }
     
-    std::cout << ship.get() << "\n";
-    
-    // Lister for controller / keyboard input
-    std::cout << "MOVING SHIP INTO THE CONTROLLER\n";
+    // Lister for controller / keyboard input and update the ship accordingly
     ship = controller.HandleInput(running, std::move(ship));
-    std::cout << "MOVED THE SHIP BACK INTO GAME.RUN()\n";
     
-    std::cout << ship.get() << "\n";
+    // Update the existing meteors
+    // TODO
     
-    // Render changes in 
-    std::cout << "MOVING SHIP INTO THE RENDERER\n";
+    // Render changes in the ship
     ship = renderer.RenderObject(std::move(ship));
-    std::cout << "MOVED THE SHIP BACK INTO GAME.RUN()\n";
     
-    // Debug print
-    std::cout << "running\n";
+    // Render changes in each meteor
+    for (std::unique_ptr<Meteor> &meteor : meteors) {
+      std::cout << "meteor: " << meteor.get() << "\n";
+      meteor = renderer.RenderObject( std::move(meteor) );
+    };
     
     // Keep track of how long each loop through the input/update/render cycle
-    frame_end = SDL_GetTicks();
+    frame_end      = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
 
     // If the time for this frame is too small (i.e. frame_duration is

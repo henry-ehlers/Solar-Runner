@@ -16,9 +16,6 @@ class Renderer {
   
   // Desctructor
   ~Renderer();
-
-  // Render the Ship (and meteors once implemented)
-  void Render();
   
   // Individual Rendering functionn
   std::unique_ptr<Ship> RenderObject(std::unique_ptr<Ship> object);
