@@ -51,34 +51,28 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     ship = controller.HandleInput(running, std::move(ship));
     
     // Update the existing meteors
-    std::cout << "1. Length of Meteors: " << meteors.size() << "\n";
+    // If out of scope, delete their contents and pointers
     to_delete.erase(to_delete.begin(),to_delete.end());
     for (std::unique_ptr<Meteor> &meteor : meteors) {
-      meteor.get()->Update();  
+      meteor.get()->Update();  		// movement update
       if (meteor.get()->GetUpperY() <= std::get<1>(screen_bounds)) {
-        to_delete.push_back(false);
+        to_delete.push_back(false);	// indicate non-removal
       } else {
-        meteor.reset();
-        to_delete.push_back(true);
+        score += 1;					// increment score
+        meteor.reset(); 			// delete object and its pointer
+        to_delete.push_back(true);	// indicate removal of nullptr
       };
     };
+    BoolIndex(meteors, to_delete);	// remove deleted nullptrs
     
-    std::cout << "2. Length of Meteors: " << meteors.size() << "\n";
-    BoolIndex(meteors, to_delete);
-    std::cout << "3.Length of Meteors: " << meteors.size() << "\n";
-    
-    // Clear the Screen
+    // Render Scene
     renderer.ClearScreen();
-    
-    // Render changes in the ship
     ship = renderer.RenderObject(std::move(ship));
-    
-    // Render changes in each meteor
     for (std::unique_ptr<Meteor> &meteor : meteors) {
       meteor = renderer.RenderObject(std::move(meteor));
     };
     
-    // Keep track of how long each loop through the input/update/render cycle
+    // Keep track of how long each loop through the 
     frame_end      = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
 
