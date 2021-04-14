@@ -23,9 +23,11 @@ class Game {
 
  private:
   
+  void BoolIndex(std::vector<std::unique_ptr<Meteor>> &meteors, std::vector<bool> to_delete);
+  
   std::unique_ptr<Ship> ship;
   std::vector<std::unique_ptr<Meteor>> meteors;
-  
+  std::vector<std::unique_ptr<Meteor>> tmp_met;
 //   std::random_device dev;
 //   std::mt19937 engine;
 //   std::uniform_int_distribution<int> random_w;
@@ -36,6 +38,8 @@ class Game {
   
   int score{-1};
   bool running;
+  
+  std::vector<bool> to_delete;
   
 };
 

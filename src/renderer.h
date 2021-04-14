@@ -22,7 +22,8 @@ class Renderer {
   std::unique_ptr<Meteor> RenderObject(std::unique_ptr<Meteor> object);
   // Update the score
   void UpdateWindowTitle(int score, int fps);
-
+  void ClearScreen();
+  
  private:
   
   // SDL

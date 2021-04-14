@@ -10,12 +10,13 @@ class Meteor : public Object {
 public:
   
   // Constructor
-  Meteor(std::tuple<int,int> location, std::tuple<int,int> bounds, int size, int speed, float rotation);
-  ~Meteor(){};
+  Meteor(std::tuple<int,int> location, int size, int speed);
   
   void Update();
   
   // Getters
+  std::tuple<int,int> GetLocation(){return(this->location);}
+  int GetUpperY(){return(std::get<1>(this->location) - this->size);}
   
 protected:
   
@@ -28,7 +29,6 @@ protected:
   
   // Update-Specific methods
   void Move();
-  void Rotate();
   
 };
 

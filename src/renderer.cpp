@@ -39,13 +39,15 @@ Renderer::~Renderer() {
 
 };
 
-std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
-  
-  // Set the color to be drawn
-  SDL_SetRenderDrawColor(this->sdl_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+void Renderer::ClearScreen() {
   
   // Clear the screen: very inefficient, i.e. we must redraw everything on every single frame, but hell whatever
+  SDL_SetRenderDrawColor(this->sdl_renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(this->sdl_renderer);
+  
+};
+
+std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
   
   //Setting the actual draw color.
   SDL_SetRenderDrawColor(this->sdl_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
@@ -75,23 +77,22 @@ std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
 }
 
 std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
+                                                                                             
+  //Setting the actual draw color.
+  SDL_SetRenderDrawColor(this->sdl_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
   
-  // Set the color to be drawn
-  SDL_SetRenderDrawColor(this->sdl_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  
-  // Clear the screen: very inefficient, i.e. we must redraw everything on every single frame, but hell whatever
-  SDL_RenderClear(this->sdl_renderer);
-
   // Get The necessary tuples
   std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
 
+  std::cout << object.get() << "\n";
+  for (int index = 0; index < size(vertices); index++) {
+    std::cout << "index " << index << ": (" << std::get<0>(vertices[index]) << ", " << std::get<1>(vertices[index]) << ")\n"; 
+  };
+               
   // Iterate over the ordered indeces and draw their lines
   for (int index = 0; index < size(vertices); index++) {
     
     // Drawing the lines we want: 
-    // inspiration for implementation: https://gist.github.com/queercat/f8069b3b69178bdf3787d2b77f59551e
-    // the input (described here: https://wiki.libsdl.org/SDL_RenderDrawLine)
-    // 0: renderer | int x1 | int y1 | int x2 | int y2
     SDL_RenderDrawLine(this->sdl_renderer, 
                        std::get <0> ( vertices[ index ] ), 
                        std::get <1> ( vertices[ index ] ), 
@@ -100,9 +101,13 @@ std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
      );
     
   };
+  
   //Update the Renderer.
   SDL_RenderPresent(this->sdl_renderer);
   
   return std::move(object);
 
 };
+                                                                                                                                                                                                                 
+
+                             
