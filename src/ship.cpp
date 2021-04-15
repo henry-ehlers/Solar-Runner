@@ -23,6 +23,13 @@ void Ship::InitializeVertices() {
   this->vertices.push_back(this->SetShipLtip());
 }
 
+void Ship::InitializeHitbox() {
+  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) - this->size, std::get<1>(this->location) - this->size));
+  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) - this->size));
+  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) + this->size));
+  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) - this->size, std::get<1>(this->location) + this->size));
+}
+
 // Calculate the Location of the Ship's nose based on x/y and height
 std::tuple<int,int> Ship::SetShipNose() {
   return (std::make_tuple(std::get<0>(location), std::get<1>(location) - ship_length/2));

@@ -57,13 +57,14 @@ void Game::Run(Renderer &renderer, Controller &controller) {
    	UpdateMeteorSize();
     
     // SPAWN METEOR
-    if ((meteors.size() <= 10) & (spawn_meteor(this->engine) == 1) & (frame_since_last_spawn == 0)) {
+    if ((meteors.size() <= 1) && (spawn_meteor(this->engine) == 1) && (frame_since_last_spawn == 0)) {
       meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
       meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
-      while (true)  {
-        meteor_x_location = this->meteor_x_location(this->engine);
-        break;
-      };
+//       while (true)  {
+//         meteor_x_location = this->meteor_x_location(this->engine);
+//         break;
+//       };
+      meteor_x_location = 320/2;
       // Determine the Meteor's location
       meteor_location = std::make_tuple(meteor_x_location, 0 - meteor_size);
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
@@ -81,7 +82,6 @@ void Game::Run(Renderer &renderer, Controller &controller) {
         to_delete.push_back(false);	// indicate non-removal
       } else {
         std::tuple<int,int> cur_loc = meteor.get()->GetLocation();
-      	std::cout << "DELETE METEOR AT:" << std::get<0>(cur_loc) << " - " << std::get<1>(cur_loc) << "\n";
         score += 1;					// increment score
         meteor.reset(); 			// delete object and its pointer
         to_delete.push_back(true);	// indicate removal of nullptr
@@ -90,9 +90,11 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     BoolIndex(meteors, to_delete);	// remove deleted nullptrs
     
     // CHECK FOR COLLISSION
-    for (std::unique_ptr<Meteor> &meteor : meteors) {
-      if (CheckCollision(meteor, ship)) {
-        return;
+    if (size(meteors) >= 1) {
+      for (std::unique_ptr<Meteor> &meteor : meteors) {
+        if (CheckCollision(meteor, ship)) {
+          return;
+        }
       }
     }
     
@@ -101,7 +103,6 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     ship = renderer.RenderObject(std::move(ship));
     for (std::unique_ptr<Meteor> &meteor : meteors) {
       std::tuple<int,int> cur_loc = meteor.get()->GetLocation();
-      std::cout << "RENDER METEOR AT:" << std::get<0>(cur_loc) << " - " << std::get<1>(cur_loc) << "\n";
       meteor = renderer.RenderObject(std::move(meteor));
     };
     renderer.UpdateScreen();
@@ -121,17 +122,16 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   std::tuple<int,int> met_loc = meteor.get()->GetLocation();
   std::tuple<int,int> ship_loc = ship.get()->GetLocation();
   
-  std::cout << "DIFF X: " << std::abs(std::get<0>(met_loc) - std::get<0>(ship_loc)) << "\n";
-  std::cout << "DIFF Y: " << std::abs(std::get<1>(met_loc) - std::get<1>(ship_loc)) << "\n";
-  
-  // Heuristic Check
-  if (20 <= std::abs( std::get<0>(met_loc) - std::get<0>(ship_loc) ) || 
-      20 <= std::abs( std::get<1>(met_loc) - std::get<1>(ship_loc) ) 
-  ) {
-    return false;
-  } else {
-    return CheckAllVertices(meteor, ship);
-  }
+//   // Heuristic Check
+//   if (20 <= std::abs( std::get<0>(met_loc) - std::get<0>(ship_loc) ) || 
+//       20 <= std::abs( std::get<1>(met_loc) - std::get<1>(ship_loc) ) 
+//   ) {
+//     return false;
+//   } else {
+//     std::cout << "CHECKING ALL VERTICES\n";
+//     return CheckAllVertices(meteor, ship);
+//   }
+  return CheckAllVertices(meteor, ship);
 };
 
 bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
@@ -155,20 +155,28 @@ bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Shi
 bool Game::CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg_1_b, std::tuple<int,int> seg_2_a, std::tuple<int,int> seg_2_b) {
   // Intersection mathematics outlined here:
   // https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
-  float A1 = ( std::get<1>(seg_1_a) - std::get<1>(seg_1_b) ) / ( std::get<0>(seg_1_a) - std::get<1>(seg_1_b) );
-  float A2 = ( std::get<1>(seg_2_a) - std::get<1>(seg_2_b) ) / ( std::get<0>(seg_2_a) - std::get<1>(seg_2_b) );
-  float b1 = std::get<1>(seg_1_a) - ( A1 * std::get<0>(seg_1_a) );
-  float b2 = std::get<1>(seg_2_a) - ( A1 * std::get<0>(seg_2_a) );
+  float A1 = ( (float)std::get<1>(seg_1_a) - (float)std::get<1>(seg_1_b) - 0.0001) / ( (float)std::get<0>(seg_1_a) - (float)std::get<0>(seg_1_b) - 0.0001);
+  float A2 = ( (float)std::get<1>(seg_2_a) - (float)std::get<1>(seg_2_b) - 0.0001) / ( (float)std::get<0>(seg_2_a) - (float)std::get<0>(seg_2_b) - 0.0001);
+  std::cout << A1 << " - " << A2 << "\n";
+  float b1 = (float)std::get<1>(seg_1_a) - ( A1 * (float)std::get<0>(seg_1_a) );
+  float b2 = (float)std::get<1>(seg_2_a) - ( A1 * (float)std::get<0>(seg_2_a) );
+  std::cout << b1 << " - " << b2 << "\n";
   if (A1 == A2) {
+    std::cout << "CHECKED THESE: PARALLEL\n";
     return false;
   };
-  float Xa = (b2 - b1) / (A1 - A2);
+  float Xa = (b2 - b1 - 0.0001) / (A1 - A2 - 0.0001);
+  std::cout << Xa << "\n";
   if (
-    ( Xa < std::max( std::min(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::min( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) || 
-    ( Xa > std::min( std::max(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::max( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) 
+    ( Xa < std::max(std::min( (float) std::get<0>(seg_1_a), (float) std::get<0>(seg_1_b)), 
+                    std::min( (float) std::get<0>(seg_2_a), (float) std::get<0>(seg_2_b)))) || 
+    ( Xa > std::min(std::max( (float) std::get<0>(seg_1_a), (float) std::get<0>(seg_1_b)), 
+                    std::max( (float) std::get<0>(seg_2_a), (float) std::get<0>(seg_2_b)))) 
   ) {
+    std::cout << "CHECKED THESE: NO\n";
     return false;
   } else {
+    std::cout << "CHECKED THESE: YES\n";
     return true;
   };
 };
