@@ -15,6 +15,7 @@ Ship::Ship(const std::tuple<int,int> xy_bounds) : nose_angle(30 * 0.0174533), sh
   this->SetShipWing();
   this->SetShipBase();
   this->InitializeVertices();
+  this->InitializeHitbox();
 };
 
 void Ship::InitializeVertices() {
@@ -24,10 +25,14 @@ void Ship::InitializeVertices() {
 }
 
 void Ship::InitializeHitbox() {
-  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) - this->size, std::get<1>(this->location) - this->size));
-  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) - this->size));
-  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) + this->size));
-  this->hurtbox.push_back(std::make_tuple(std::get<0>(this->location) - this->size, std::get<1>(this->location) + this->size));
+  std::tuple<int,int> top_point    = vertices[0];
+  std::tuple<int,int> bottom_right = vertices[1];
+  std::tuple<int,int> bottom_left  = vertices[2];
+  
+  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_left ), std::get<1>(top_point) ) );
+  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(top_point) ) );
+  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(bottom_right) ) );
+  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_left ), std::get<1>(bottom_left ) ) );
 }
 
 // Calculate the Location of the Ship's nose based on x/y and height

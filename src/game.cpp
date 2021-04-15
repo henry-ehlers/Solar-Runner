@@ -119,8 +119,9 @@ void Game::Run(Renderer &renderer, Controller &controller) {
 };
 
 bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
-  std::tuple<int,int> met_loc = meteor.get()->GetLocation();
-  std::tuple<int,int> ship_loc = ship.get()->GetLocation();
+  std::vector<std::tuple<int,int>> ship_rect   = ship.get()   -> GetVertices();
+  std::vector<std::tuple<int,int>> meteor_rect = meteor.get() -> GetVertices();
+  return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
   
 //   // Heuristic Check
 //   if (20 <= std::abs( std::get<0>(met_loc) - std::get<0>(ship_loc) ) || 
@@ -131,52 +132,32 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
 //     std::cout << "CHECKING ALL VERTICES\n";
 //     return CheckAllVertices(meteor, ship);
 //   }
-  return CheckAllVertices(meteor, ship);
 };
 
-bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
-  bool collision = false;
-  std::vector<std::tuple<int,int>> ship_vertices = ship.get()->GetVertices();
-  std::vector<std::tuple<int,int>> meteor_vertices = meteor.get()->GetVertices();
-  for (int sindex = 0; sindex < size(ship_vertices); sindex++) {
-    for (int mindex = 0; mindex < size(meteor_vertices); mindex++) {
-      collision = CheckTwoVertices(
-        ship_vertices[sindex], ship_vertices[(sindex + 1) % size(ship_vertices)],
-        meteor_vertices[mindex], meteor_vertices[(mindex + 1) % size(meteor_vertices)]
-      );
-      if (collision) {
-        return collision;
-      };
-    };
-  };
-  return collision;
-};
 
-bool Game::CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg_1_b, std::tuple<int,int> seg_2_a, std::tuple<int,int> seg_2_b) {
+bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> right_1, std::tuple<int,int> left_2, std::tuple<int,int> right_2) {
   // Intersection mathematics outlined here:
-  // https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
-  float A1 = ( (float)std::get<1>(seg_1_a) - (float)std::get<1>(seg_1_b) - 0.0001) / ( (float)std::get<0>(seg_1_a) - (float)std::get<0>(seg_1_b) - 0.0001);
-  float A2 = ( (float)std::get<1>(seg_2_a) - (float)std::get<1>(seg_2_b) - 0.0001) / ( (float)std::get<0>(seg_2_a) - (float)std::get<0>(seg_2_b) - 0.0001);
-  std::cout << A1 << " - " << A2 << "\n";
-  float b1 = (float)std::get<1>(seg_1_a) - ( A1 * (float)std::get<0>(seg_1_a) );
-  float b2 = (float)std::get<1>(seg_2_a) - ( A1 * (float)std::get<0>(seg_2_a) );
-  std::cout << b1 << " - " << b2 << "\n";
-  if (A1 == A2) {
-    std::cout << "CHECKED THESE: PARALLEL\n";
+  // https://www.geeksforgeeks.org/find-two-rectangles-overlap/
+  if (std::get<0>(left_1) == std::get<0>(right_1) || 
+      std::get<1>(left_1) == std::get<0>(right_2) || 
+      std::get<0>(left_2) == std::get<0>(right_2) || 
+      std::get<1>(left_2) == std::get<1>(right_2)
+     ) {
     return false;
   };
-  float Xa = (b2 - b1 - 0.0001) / (A1 - A2 - 0.0001);
-  std::cout << Xa << "\n";
-  if (
-    ( Xa < std::max(std::min( (float) std::get<0>(seg_1_a), (float) std::get<0>(seg_1_b)), 
-                    std::min( (float) std::get<0>(seg_2_a), (float) std::get<0>(seg_2_b)))) || 
-    ( Xa > std::min(std::max( (float) std::get<0>(seg_1_a), (float) std::get<0>(seg_1_b)), 
-                    std::max( (float) std::get<0>(seg_2_a), (float) std::get<0>(seg_2_b)))) 
-  ) {
-    std::cout << "CHECKED THESE: NO\n";
+  
+   // If one rectangle is on left side of other
+  if (std::get<0>(left_1) >= std::get<0>(right_2) || 
+      std::get<0>(left_2) >= std::get<0>(right_1)
+     ) {
     return false;
-  } else {
-    std::cout << "CHECKED THESE: YES\n";
-    return true;
   };
+  
+  // If one rectangle is above other
+  if (std::get<1>(left_1) <= std::get<1>(right_2) || 
+      std::get<1>(left_2) <= std::get<1>(right_1)) {
+    return false;
+  }
+    
+  return true;
 };

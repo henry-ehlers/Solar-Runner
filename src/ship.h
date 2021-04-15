@@ -24,9 +24,10 @@ public:
   
   // Setters
   void InitializeVertices();
+  void InitializeHitbox();
   
   // Getters
-  
+  std::vector<std::tuple<int,int>> GetHurtbox() {return this->hurtbox;}
   // Update based on player input
   void BankLeft();
   void BankRight();
@@ -46,6 +47,7 @@ protected:
   std::tuple<int,int> SetShipNose();
   std::tuple<int,int> SetShipLtip();
   std::tuple<int,int> SetShipRtip();
+  std::vector<std::tuple<int,int>> hurtbox;
   void SetShipWing();
   void SetShipBase();
   
