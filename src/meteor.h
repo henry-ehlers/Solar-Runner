@@ -12,6 +12,7 @@ public:
   // Constructor
   Meteor(std::tuple<int,int> location, int size, int speed);
   
+  // Alter the meteor in accordance with the game per frame
   void Update();
   
   // Getters
@@ -20,11 +21,12 @@ public:
   
 protected:
   
-  //
+  // Initialez the vertices based on location and size
   void InitializeVertices();
   
   // Fields required in addition to those of the 'Object' class
-  float rotation;
+  std::tuple<int,int> location;
+  int speed;
   int size;
   
   // Update-Specific methods

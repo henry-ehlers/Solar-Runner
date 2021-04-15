@@ -6,7 +6,7 @@
 #include <memory>
 #include <tuple>
 
-Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), metor_x_locaction(0, static_cast<int>(std::get<0>(xy_bounds) - 1)), meteor_speed(-2, 2) {
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), metor_x_locaction(0, static_cast<int>(std::get<0>(xy_bounds) - 1)), meteor_speed(-2, 2), spawn_meteor(1) {
 };
 
 void Game::BoolIndex (std::vector<std::unique_ptr<Meteor>> &meteors, std::vector<bool> to_delete) {
@@ -33,10 +33,17 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   Uint32 frame_end;
   Uint32 frame_duration;
   
-  // Inititialize Key variables
+  // Inititialize Key Game Logic variables
   this->running = true;
   this->score = 0;
-
+  
+  // Initialize Meteor Variables
+  this->meteor_spawn_speed = 120;
+  int frame_since_last_spawn = 0;
+  std::tuple<int,int> meteor_location;
+  int meteor_speed;
+  int meteor_size;
+  
   // Start Game Loop
   while (this->running) {
     
@@ -44,13 +51,20 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     frame_start = SDL_GetTicks();
 
     // Update Game Speed
-
+	std::cout << "--------------------------------\n";
     // Decide whether to and where spawn new Meteor
-    // & spawn_meteor(this->engine)
-    if (meteors.size() <= 10) {
-      std::tuple<int,int> MeteorLocation = std::make_tuple(320/2, 640/2);
-      meteors.push_back(std::make_unique<Meteor>(MeteorLocation,10,2));
-    }
+    if ((meteors.size() <= 10) & (spawn_meteor(this->engine) == 1) & (frame_since_last_spawn == 0)) {
+      std::cout << "SPAWN METEOR\n";
+      
+      // Determine the Meteor's location
+      meteor_location = std::make_tuple(
+        320/2, 
+        0);
+      meteor_speed = 5;
+      meteor_size = 10;
+      meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
+      frame_since_last_spawn = this->meteor_spawn_speed;
+    };
     
     // Lister for controller / keyboard input and update the ship accordingly
     ship = controller.HandleInput(running, std::move(ship));
@@ -63,6 +77,8 @@ void Game::Run(Renderer &renderer, Controller &controller) {
       if (meteor.get()->GetUpperY() <= std::get<1>(screen_bounds)) {
         to_delete.push_back(false);	// indicate non-removal
       } else {
+        std::tuple<int,int> cur_loc = meteor.get()->GetLocation();
+      	std::cout << "DELETE METEOR AT:" << std::get<0>(cur_loc) << " - " << std::get<1>(cur_loc) << "\n";
         score += 1;					// increment score
         meteor.reset(); 			// delete object and its pointer
         to_delete.push_back(true);	// indicate removal of nullptr
@@ -70,12 +86,18 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     };
     BoolIndex(meteors, to_delete);	// remove deleted nullptrs
     
-    // Render Scene
+    // RENDER FRAME
     renderer.ClearScreen();
     ship = renderer.RenderObject(std::move(ship));
     for (std::unique_ptr<Meteor> &meteor : meteors) {
+      std::tuple<int,int> cur_loc = meteor.get()->GetLocation();
+      std::cout << "RENDER METEOR AT:" << std::get<0>(cur_loc) << " - " << std::get<1>(cur_loc) << "\n";
       meteor = renderer.RenderObject(std::move(meteor));
     };
+    renderer.UpdateScreen();
+    
+    // Update
+    frame_since_last_spawn -= 1;
     
     // Keep track of how long each loop through the 
     frame_end      = SDL_GetTicks();

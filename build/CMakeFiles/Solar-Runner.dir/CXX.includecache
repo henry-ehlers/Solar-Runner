@@ -56,6 +56,20 @@ game.h
 renderer.h
 /home/workspace/Solar-Runner/src/renderer.h
 
+/home/workspace/Solar-Runner/src/meteor.cpp
+meteor.h
+/home/workspace/Solar-Runner/src/meteor.h
+iostream
+-
+tuple
+-
+vector
+-
+cmath
+-
+math.h
+-
+
 /home/workspace/Solar-Runner/src/meteor.h
 object.h
 /home/workspace/Solar-Runner/src/object.h
@@ -68,6 +82,22 @@ vector
 tuple
 -
 vector
+-
+
+/home/workspace/Solar-Runner/src/renderer.cpp
+renderer.h
+/home/workspace/Solar-Runner/src/renderer.h
+ship.h
+/home/workspace/Solar-Runner/src/ship.h
+vector
+-
+tuple
+-
+iostream
+-
+string
+-
+math.h
 -
 
 /home/workspace/Solar-Runner/src/renderer.h

@@ -36,7 +36,6 @@ Renderer::Renderer(const std::size_t screen_width, const std::size_t screen_heig
 Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
-
 };
 
 void Renderer::ClearScreen() {
@@ -70,9 +69,6 @@ std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
      );
   };
   
-  //Update the Renderer.
-  SDL_RenderPresent(this->sdl_renderer);
-  
   return std::move(object);
 }
 
@@ -83,14 +79,13 @@ std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
   
   // Get The necessary tuples
   std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
-
-  std::cout << object.get() << "\n";
-  for (int index = 0; index < size(vertices); index++) {
-    std::cout << "index " << index << ": (" << std::get<0>(vertices[index]) << ", " << std::get<1>(vertices[index]) << ")\n"; 
-  };
                
+  std::cout << "VERTICES:\n";
+  
   // Iterate over the ordered indeces and draw their lines
   for (int index = 0; index < size(vertices); index++) {
+    
+    std::cout << std::get <0> ( vertices[ index ] ) << " - " << std::get <1> ( vertices[ index ] ) << "\n";
     
     // Drawing the lines we want: 
     SDL_RenderDrawLine(this->sdl_renderer, 
@@ -102,12 +97,13 @@ std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
     
   };
   
-  //Update the Renderer.
-  SDL_RenderPresent(this->sdl_renderer);
-  
   return std::move(object);
 
 };
-                                                                                                                                                                                                                 
+                                                                                                                                                                         
+void Renderer::UpdateScreen(){
+  //Update the Renderer.
+  SDL_RenderPresent(this->sdl_renderer);
+};
 
                              

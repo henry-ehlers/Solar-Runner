@@ -38,10 +38,17 @@ class Game {
   // Random Number Generator for meteor location
   std::random_device dev;
   std::mt19937 engine;
-  //std::bernoulli_distribution spawn_meteor;
+  std::bernoulli_distribution spawn_meteor;
   std::uniform_int_distribution <int> metor_x_locaction;
   std::uniform_int_distribution <int> meteor_speed;
+  std::uniform_int_distribution <int> meteor_size;
   
+  // Meteor Parameters
+  int default_meteor_speed;		// number of pixels traveled per frame
+  int default_meteor_size;		// see meteor size parameter
+  int meteor_spawn_speed;		// Measured in frames
+  int max_n_meteors;			// max number of meteors that can exist
+
   // Constants relating to game rendering (FPS, sceen dimensionis)
   const std::tuple<int,int> screen_bounds;
   const std::size_t FRAMES_PER_SECOND;

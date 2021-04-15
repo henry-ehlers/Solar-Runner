@@ -20,8 +20,14 @@ class Renderer {
   // Individual Rendering functionn
   std::unique_ptr<Ship> RenderObject(std::unique_ptr<Ship> object);
   std::unique_ptr<Meteor> RenderObject(std::unique_ptr<Meteor> object);
+  
   // Update the score
   void UpdateWindowTitle(int score, int fps);
+  
+  // Draw object
+  void UpdateScreen();
+  
+  // Clear the screen
   void ClearScreen();
   
  private:
