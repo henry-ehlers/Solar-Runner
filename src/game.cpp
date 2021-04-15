@@ -130,12 +130,26 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   ) {
     return false;
   } else {
-    return true;
+    return CheckAllVertices(meteor, ship);
   }
 };
 
 bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
-  
+  bool collision = false;
+  std::vector<std::tuple<int,int>> ship_vertices = ship.get()->GetVertices();
+  std::vector<std::tuple<int,int>> meteor_vertices = meteor.get()->GetVertices();
+  for (int sindex = 0; sindex < size(ship_vertices); sindex++) {
+    for (int mindex = 0; mindex < size(meteor_vertices); mindex++) {
+      collision = CheckTwoVertices(
+        ship_vertices[sindex], ship_vertices[(sindex + 1) % size(ship_vertices)],
+        meteor_vertices[mindex], meteor_vertices[(mindex + 1) % size(meteor_vertices)]
+      );
+      if (collision) {
+        return collision;
+      };
+    };
+  };
+  return collision;
 };
 
 bool Game::CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg_1_b, std::tuple<int,int> seg_2_a, std::tuple<int,int> seg_2_b) {
@@ -158,5 +172,3 @@ bool Game::CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg
     return true;
   };
 };
-
-bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {}
