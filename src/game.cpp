@@ -6,7 +6,7 @@
 #include <memory>
 #include <tuple>
 
-Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), meteor_x_location(0, static_cast<int>(std::get<0>(xy_bounds) - 1)), meteor_speed(-2, 2), spawn_meteor(1), meteor_size(-2, 2) {
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), meteor_x_location(20, static_cast<int>(std::get<0>(xy_bounds) - 20)), meteor_speed(-2, 2), spawn_meteor(1), meteor_size(-2, 2) {
 };
 
 void Game::BoolIndex (std::vector<std::unique_ptr<Meteor>> &meteors, std::vector<bool> to_delete) {
@@ -39,7 +39,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   
   // Initialize Meteor Variables
   this->meteor_spawn_speed = 120;
-  int frame_since_last_spawn = 0;
+  int frame_since_last_spawn = 1;
   std::tuple<int,int> meteor_location;
   int meteor_x_location;
   int meteor_speed;
@@ -50,22 +50,20 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     
     // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
-	
+
+    // UPDATE KEY QUANTITIES
+    frame_since_last_spawn -= 1;
     UpdateMeteorSpeed();
    	UpdateMeteorSize();
     
-    // Update Game Speed
-	std::cout << "--------------------------------\n";
     // Decide whether to and where spawn new Meteor
     if ((meteors.size() <= 10) & (spawn_meteor(this->engine) == 1) & (frame_since_last_spawn == 0)) {
-      std::cout << "SPAWN METEOR\n";
       meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
       meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
       while (true)  {
         meteor_x_location = this->meteor_x_location(this->engine);
         break;
       };
-      
       // Determine the Meteor's location
       meteor_location = std::make_tuple(meteor_x_location, 0 - meteor_size);
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
@@ -101,9 +99,6 @@ void Game::Run(Renderer &renderer, Controller &controller) {
       meteor = renderer.RenderObject(std::move(meteor));
     };
     renderer.UpdateScreen();
-    
-    // Update
-    frame_since_last_spawn -= 1;
     
     // Keep track of how long each loop through the 
     frame_end      = SDL_GetTicks();

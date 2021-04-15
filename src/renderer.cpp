@@ -80,13 +80,9 @@ std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
   // Get The necessary tuples
   std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
                
-  std::cout << "VERTICES:\n";
-  
   // Iterate over the ordered indeces and draw their lines
   for (int index = 0; index < size(vertices); index++) {
-    
-    std::cout << std::get <0> ( vertices[ index ] ) << " - " << std::get <1> ( vertices[ index ] ) << "\n";
-    
+
     // Drawing the lines we want: 
     SDL_RenderDrawLine(this->sdl_renderer, 
                        std::get <0> ( vertices[ index ] ), 

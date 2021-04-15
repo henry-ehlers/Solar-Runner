@@ -7,6 +7,7 @@
 
 #include "SDL.h"
 
+#include "iostream"
 #include "renderer.h"
 #include "controller.h"
 #include "ship.h"
@@ -59,8 +60,14 @@ class Game {
   bool running;
   
   // 
-  void UpdateMeteorSpeed() { meteor_spawn_speed = ((-10)/(this->score + 2)) + 7; };
-  void UpdateMeteorSize()  { meteor_spawn_speed = ((-10)/(this->score + 2)) + 7; };
+  void UpdateMeteorSpeed() { 
+    default_meteor_speed = ((-10)/(this->score + 2)) + 7; 
+    std::cout << "METEOR SPEED: " << meteor_spawn_speed << "\n";
+  };
+  void UpdateMeteorSize()  { 
+    default_meteor_size = ((-10)/(this->score + 2)) + 7; 
+    std::cout << "METEOR SPEED: " << meteor_spawn_speed << "\n";
+  };
 };
 
 #endif
