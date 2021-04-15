@@ -75,13 +75,3 @@ void Ship::UpdateInformation(int x_delta) {
     std::get<0>(vertex) += x_delta;
   }
 };
-
-bool Ship::Collision(std::unique_ptr<Meteor> meteor) {
-  std::tuple<int,int> met_loc = meteor.get()->GetLocation();
-  if (20 >= std::abs(std::get<0>(met_loc) - std::get<0>(this->location)) || 
-      20 >= std::abs(std::get<1>(met_loc) - std::get<1>(this->location)) ) {
-    return false;
-  } else {
-    return true;
-  }
-}

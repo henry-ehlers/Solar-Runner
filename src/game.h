@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <memory>
 #include <random>
 #include <tuple>
 #include <vector>
@@ -23,6 +24,9 @@ class Game {
   // Main Loop
   void Run(Renderer &renderer, Controller &controller);
 
+  // Check for collissions
+  bool CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship);
+  
  private:
   
   // Function that updates a vector of unique pointers based on bool vec.

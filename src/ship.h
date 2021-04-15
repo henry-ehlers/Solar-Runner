@@ -27,9 +27,6 @@ public:
   
   // Getters
   
-  // Check whether ship collides with meteor
-  bool Collision(std::unique_ptr<Meteor> meteor);
-  
   // Update based on player input
   void BankLeft();
   void BankRight();

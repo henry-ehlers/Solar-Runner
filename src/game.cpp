@@ -89,6 +89,8 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     };
     BoolIndex(meteors, to_delete);	// remove deleted nullptrs
     
+    // CHECK FOR COLLISSION
+    
     // RENDER FRAME
     renderer.ClearScreen();
     ship = renderer.RenderObject(std::move(ship));
@@ -110,3 +112,15 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   };
 };
 
+bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
+  std::tuple<int,int> met_loc = meteor.get()->GetLocation();
+  std::tuple<int,int> ship_loc = ship.get()->GetLocation();
+  
+  // Heuristic Check
+  if (20 >= std::abs(std::get<0>(met_loc) - std::get<0>(ship_loc)) || 
+      20 >= std::abs(std::get<1>(met_loc) - std::get<1>(ship_loc)) ) {
+    return false;
+  } else {
+    return true;
+  }
+};
