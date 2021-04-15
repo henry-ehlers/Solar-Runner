@@ -32,19 +32,24 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   Uint32 frame_end;
   Uint32 frame_duration;
   
+  // Inititialize Key variables
   this->running = true;
   this->score = 0;
-  bool test = true;
+
+  // Start Game Loop
   while (this->running) {
     
     // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
 
-    // Spawn new Meteor
-    if (test) {
+    // Update Bernoulli Distribution
+    meteor_probability = 0.5 - 1.0 * (1.0 / this->score);
+    spawn_meteor(meteor_probability);
+
+    // Decide whether to and where spawn new Meteor
+    if (if meteors.size() <= 10 & spawn_meteor(this->engine)) {
       std::tuple<int,int> MeteorLocation = std::make_tuple(320/2, 640/2);
       meteors.push_back(std::make_unique<Meteor>(MeteorLocation,10,2));
-      test = false;
     }
     
     // Lister for controller / keyboard input and update the ship accordingly

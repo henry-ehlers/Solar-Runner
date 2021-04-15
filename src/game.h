@@ -19,27 +19,37 @@ class Game {
   // Constructor
   Game(const int fps, const std::tuple<int,int> xy_bounds);
   
+  // Main Loop
   void Run(Renderer &renderer, Controller &controller);
 
  private:
   
+  // Function that updates a vector of unique pointers based on bool vec.
   void BoolIndex(std::vector<std::unique_ptr<Meteor>> &meteors, std::vector<bool> to_delete);
   
+  // Unique Pointer to a singular, player-controlled ship
   std::unique_ptr<Ship> ship;
+
+  // Vector of unique pointers to meteors on screen + 2 vectors for updating
   std::vector<std::unique_ptr<Meteor>> meteors;
   std::vector<std::unique_ptr<Meteor>> tmp_met;
-//   std::random_device dev;
-//   std::mt19937 engine;
-//   std::uniform_int_distribution<int> random_w;
-//   std::uniform_int_distribution<int> random_h;
+  std::vector<bool> to_delete;
+
+  // Random Number Generator for meteor location
+  std::random_device dev;
+  std::mt19937 engine(dev());
+  float meteor_probability
+  std::uniform_int_distribution<int> metor_x_locaction;
+  std::bernoulli_distribution<bool> spawn_meteor;
+
+  // Constants relating to game rendering (FPS, sceen dimensionis)
   const std::tuple<int,int> screen_bounds;
   const std::size_t FRAMES_PER_SECOND;
   const std::size_t KM_PER_FRAME;
   
+  // The Score and whether the game is running
   int score{-1};
   bool running;
-  
-  std::vector<bool> to_delete;
   
 };
 
