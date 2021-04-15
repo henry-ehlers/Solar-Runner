@@ -2,6 +2,9 @@
 #define SHIP_H
 
 #include "object.h"
+#include "meteor.h"
+
+#include <memory>
 #include <tuple>
 #include <vector>
 /*
@@ -23,6 +26,9 @@ public:
   void InitializeVertices();
   
   // Getters
+  
+  // Check whether ship collides with meteor
+  bool Collision(std::unique_ptr<Meteor> meteor);
   
   // Update based on player input
   void BankLeft();

@@ -12,11 +12,7 @@ Meteor::Meteor(std::tuple<int,int> location, int size, int speed) : location(loc
 
 void Meteor::InitializeVertices(){
   
-  // Initialization ignored, despite the discussion and code example here:
-  // https://www.geeksforgeeks.org/initialize-a-vector-in-cpp-different-ways/
-  // Problems with tuples seemingly
-  // see https://stackoverflow.com/questions/686353/random-float-number-generation
-  //float random_initial_rotation = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/360));
+  // Intialize the meteor's four vertices
   this->vertices.push_back(std::make_tuple(std::get<0>(this->location) - this->size, std::get<1>(this->location) - this->size));
   this->vertices.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) - this->size));
   this->vertices.push_back(std::make_tuple(std::get<0>(this->location) + this->size, std::get<1>(this->location) + this->size));
@@ -25,8 +21,7 @@ void Meteor::InitializeVertices(){
 };
 
 void Meteor::Update() {
-  // Only move the meteors downward. 
-  // Rotation not implemented owing to float->int issues
+  // Only move the meteors downward, i.e. no rotation
   Move();
 };
 

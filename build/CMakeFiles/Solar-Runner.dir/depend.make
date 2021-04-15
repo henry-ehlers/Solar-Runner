@@ -3,6 +3,7 @@
 
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: ../src/controller.cpp
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: ../src/controller.h
+CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: ../src/meteor.h
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: ../src/object.h
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: ../src/ship.h
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o: /usr/include/SDL2/SDL.h
@@ -204,6 +205,7 @@ CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o: /usr/include/SDL2/SDL_video.h
 CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o: /usr/include/SDL2/begin_code.h
 CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o: /usr/include/SDL2/close_code.h
 
+CMakeFiles/Solar-Runner.dir/src/ship.cpp.o: ../src/meteor.h
 CMakeFiles/Solar-Runner.dir/src/ship.cpp.o: ../src/object.h
 CMakeFiles/Solar-Runner.dir/src/ship.cpp.o: ../src/ship.cpp
 CMakeFiles/Solar-Runner.dir/src/ship.cpp.o: ../src/ship.h

@@ -4,6 +4,7 @@
 CMakeFiles/Solar-Runner.dir/src/controller.cpp.o
  /home/workspace/Solar-Runner/src/controller.cpp
  /home/workspace/Solar-Runner/src/controller.h
+ /home/workspace/Solar-Runner/src/meteor.h
  /home/workspace/Solar-Runner/src/object.h
  /home/workspace/Solar-Runner/src/ship.h
  /usr/include/SDL2/SDL.h
@@ -205,6 +206,7 @@ CMakeFiles/Solar-Runner.dir/src/renderer.cpp.o
  /usr/include/SDL2/begin_code.h
  /usr/include/SDL2/close_code.h
 CMakeFiles/Solar-Runner.dir/src/ship.cpp.o
+ /home/workspace/Solar-Runner/src/meteor.h
  /home/workspace/Solar-Runner/src/object.h
  /home/workspace/Solar-Runner/src/ship.cpp
  /home/workspace/Solar-Runner/src/ship.h
