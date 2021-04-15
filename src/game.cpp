@@ -6,7 +6,7 @@
 #include <memory>
 #include <tuple>
 
-Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), metor_x_locaction(0, static_cast<int>(std::get<0>(xy_bounds) - 1)), meteor_speed(-2, 2), spawn_meteor(1) {
+Game::Game(const int fps, const std::tuple<int,int> xy_bounds) : ship(std::make_unique<Ship>(xy_bounds)), screen_bounds(xy_bounds), FRAMES_PER_SECOND(fps), KM_PER_FRAME(1000/fps), engine(dev()), meteor_x_location(0, static_cast<int>(std::get<0>(xy_bounds) - 1)), meteor_speed(-2, 2), spawn_meteor(1), meteor_size(-2, 2) {
 };
 
 void Game::BoolIndex (std::vector<std::unique_ptr<Meteor>> &meteors, std::vector<bool> to_delete) {
@@ -41,6 +41,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   this->meteor_spawn_speed = 120;
   int frame_since_last_spawn = 0;
   std::tuple<int,int> meteor_location;
+  int meteor_x_location;
   int meteor_speed;
   int meteor_size;
   
@@ -58,13 +59,15 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     // Decide whether to and where spawn new Meteor
     if ((meteors.size() <= 10) & (spawn_meteor(this->engine) == 1) & (frame_since_last_spawn == 0)) {
       std::cout << "SPAWN METEOR\n";
+      meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
+      meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
+      while (true)  {
+        meteor_x_location = this->meteor_x_location(this->engine);
+        break;
+      };
       
       // Determine the Meteor's location
-      meteor_location = std::make_tuple(
-        320/2, 
-        0);
-      meteor_speed = ;
-      meteor_size = 10;
+      meteor_location = std::make_tuple(meteor_x_location, 0 - meteor_size);
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
       frame_since_last_spawn = this->meteor_spawn_speed;
     };

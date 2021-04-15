@@ -39,9 +39,9 @@ class Game {
   std::random_device dev;
   std::mt19937 engine;
   std::bernoulli_distribution spawn_meteor;
-  std::uniform_int_distribution <int> metor_x_locaction;
-  std::uniform_int_distribution <int> meteor_speed;
-  std::uniform_int_distribution <int> meteor_size;
+  std::uniform_int_distribution <int> meteor_x_location;	// rng for location
+  std::uniform_int_distribution <int> meteor_speed;			// rng for speed
+  std::uniform_int_distribution <int> meteor_size;			// rng for size
   
   // Meteor Parameters
   int default_meteor_speed;		// number of pixels traveled per frame
@@ -59,8 +59,8 @@ class Game {
   bool running;
   
   // 
-  void UpdateMeteorSpeed() { this->meteor_speed = (-10)/(this->score + 2) + 7 };
-  void UpdateMeteorSize()  { this->meteor_speed = (-10)/(this->score + 2) + 7 };;
+  void UpdateMeteorSpeed() { meteor_spawn_speed = ((-10)/(this->score + 2)) + 7; };
+  void UpdateMeteorSize()  { meteor_spawn_speed = ((-10)/(this->score + 2)) + 7; };
 };
 
 #endif
