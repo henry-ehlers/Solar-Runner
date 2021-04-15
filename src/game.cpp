@@ -48,7 +48,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   // Start Game Loop
   while (this->running) {
     
-    // Count / keep track of when this frame started
+    // KEEP FRAMES CONSISTENT
     frame_start = SDL_GetTicks();
 
     // UPDATE KEY QUANTITIES
@@ -56,7 +56,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     UpdateMeteorSpeed();
    	UpdateMeteorSize();
     
-    // Decide whether to and where spawn new Meteor
+    // SPAWN METEOR
     if ((meteors.size() <= 10) & (spawn_meteor(this->engine) == 1) & (frame_since_last_spawn == 0)) {
       meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
       meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
@@ -70,14 +70,13 @@ void Game::Run(Renderer &renderer, Controller &controller) {
       frame_since_last_spawn = this->meteor_spawn_speed;
     };
     
-    // Lister for controller / keyboard input and update the ship accordingly
+    // USER INPUT
     ship = controller.HandleInput(running, std::move(ship));
     
-    // Update the existing meteors
-    // If out of scope, delete their contents and pointers
+    // MOVE METEORS AND FIGURE OUT WHICH ARE OUT OF SCOPE, AND DELETE (MEMORY MANAGEMENT)
     to_delete.erase(to_delete.begin(),to_delete.end());
     for (std::unique_ptr<Meteor> &meteor : meteors) {
-      meteor.get()->Update();  		// movement update
+      meteor.get()->Update(); 
       if (meteor.get()->GetUpperY() <= std::get<1>(screen_bounds)) {
         to_delete.push_back(false);	// indicate non-removal
       } else {
@@ -99,14 +98,11 @@ void Game::Run(Renderer &renderer, Controller &controller) {
       meteor = renderer.RenderObject(std::move(meteor));
     };
     renderer.UpdateScreen();
+    renderer.UpdateWindowTitle(this->score);
     
-    // Keep track of how long each loop through the 
+    // KEEP FRAMES PER SECOND CONSISTENT
     frame_end      = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
-
-    // If the time for this frame is too small (i.e. frame_duration is
-    // smaller than the target ms_per_frame), delay the loop to
-    // achieve the correct frame rate and game speed
     if (frame_duration < KM_PER_FRAME) {
       SDL_Delay(KM_PER_FRAME - frame_duration);
     }

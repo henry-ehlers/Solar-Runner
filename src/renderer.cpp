@@ -94,7 +94,6 @@ std::unique_ptr<Meteor> Renderer::RenderObject(std::unique_ptr<Meteor> object) {
   };
   
   return std::move(object);
-
 };
                                                                                                                                                                          
 void Renderer::UpdateScreen(){
@@ -102,4 +101,9 @@ void Renderer::UpdateScreen(){
   SDL_RenderPresent(this->sdl_renderer);
 };
 
-                             
+void Renderer::UpdateWindowTitle(int score) {
+  std::string title{"Solar Runner: " + std::to_string(score) + " pts"};
+  SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+                          
