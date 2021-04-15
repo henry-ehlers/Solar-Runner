@@ -90,6 +90,11 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     BoolIndex(meteors, to_delete);	// remove deleted nullptrs
     
     // CHECK FOR COLLISSION
+    for (std::unique_ptr<Meteor> &meteor : meteors) {
+      if (CheckCollision(meteor, ship)) {
+        return;
+      }
+    }
     
     // RENDER FRAME
     renderer.ClearScreen();
@@ -116,11 +121,41 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   std::tuple<int,int> met_loc = meteor.get()->GetLocation();
   std::tuple<int,int> ship_loc = ship.get()->GetLocation();
   
+  std::cout << "DIFF X: " << std::abs(std::get<0>(met_loc) - std::get<0>(ship_loc)) << "\n";
+  std::cout << "DIFF Y: " << std::abs(std::get<1>(met_loc) - std::get<1>(ship_loc)) << "\n";
+  
   // Heuristic Check
-  if (20 >= std::abs(std::get<0>(met_loc) - std::get<0>(ship_loc)) || 
-      20 >= std::abs(std::get<1>(met_loc) - std::get<1>(ship_loc)) ) {
+  if (20 <= std::abs( std::get<0>(met_loc) - std::get<0>(ship_loc) ) || 
+      20 <= std::abs( std::get<1>(met_loc) - std::get<1>(ship_loc) ) 
+  ) {
     return false;
   } else {
     return true;
   }
 };
+
+bool Game::VertecesToVerteces(
+  std::vector<std::tuple<int,int>> seg_1_a, 
+  std::vector<std::tuple<int,int>> seg_1_b
+  std::vector<std::tuple<int,int>> seg_2_a, 
+  std::vector<std::tuple<int,int>> seg_2_b) {
+  // Intersection mathematics outlined here:
+  // https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
+  float A1 = ( std::get<1>(seg_1_a) - std::get<1>(seg_1_b) ) / ( std::get<0>(seg_1_a) - std::get<1>(seg_1_b) );
+  float A1 = ( std::get<1>(seg_2_a) - std::get<1>(seg_2_b) ) / ( std::get<0>(seg_2_a) - std::get<1>(seg_2_b) );
+  float b1 = std::get<1>(seg_1_a) - ( A1 * std::get<0>(seg_1_a) );
+  float b2 = std::get<1>(seg_2_a) - ( A1 * std::get<0>(seg_2_a) );
+  if (A1 == A2) {
+    return false;
+  };
+  float Xa = (b2 - b1) / (A1 - A2);
+  if (
+    ( Xa < std::max( std::min(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::min( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) || 
+    ( Xa > std::min( std::max(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::max( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) ) {
+    return false;
+  } else {
+    return true;
+  };
+};
+
+bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {}
