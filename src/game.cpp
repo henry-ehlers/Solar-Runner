@@ -49,7 +49,10 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     
     // Count / keep track of when this frame started
     frame_start = SDL_GetTicks();
-
+	
+    UpdateMeteorSpeed();
+   	UpdateMeteorSize();
+    
     // Update Game Speed
 	std::cout << "--------------------------------\n";
     // Decide whether to and where spawn new Meteor
@@ -60,7 +63,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
       meteor_location = std::make_tuple(
         320/2, 
         0);
-      meteor_speed = 5;
+      meteor_speed = ;
       meteor_size = 10;
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
       frame_since_last_spawn = this->meteor_spawn_speed;

@@ -58,6 +58,9 @@ class Game {
   int score{-1};
   bool running;
   
+  // 
+  void UpdateMeteorSpeed() { this->meteor_speed = (-10)/(this->score + 2) + 7 };
+  void UpdateMeteorSize()  { this->meteor_speed = (-10)/(this->score + 2) + 7 };;
 };
 
 #endif
