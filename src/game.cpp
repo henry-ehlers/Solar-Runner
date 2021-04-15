@@ -134,15 +134,15 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   }
 };
 
-bool Game::VertecesToVerteces(
-  std::vector<std::tuple<int,int>> seg_1_a, 
-  std::vector<std::tuple<int,int>> seg_1_b
-  std::vector<std::tuple<int,int>> seg_2_a, 
-  std::vector<std::tuple<int,int>> seg_2_b) {
+bool Game::CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
+  
+};
+
+bool Game::CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg_1_b, std::tuple<int,int> seg_2_a, std::tuple<int,int> seg_2_b) {
   // Intersection mathematics outlined here:
   // https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
   float A1 = ( std::get<1>(seg_1_a) - std::get<1>(seg_1_b) ) / ( std::get<0>(seg_1_a) - std::get<1>(seg_1_b) );
-  float A1 = ( std::get<1>(seg_2_a) - std::get<1>(seg_2_b) ) / ( std::get<0>(seg_2_a) - std::get<1>(seg_2_b) );
+  float A2 = ( std::get<1>(seg_2_a) - std::get<1>(seg_2_b) ) / ( std::get<0>(seg_2_a) - std::get<1>(seg_2_b) );
   float b1 = std::get<1>(seg_1_a) - ( A1 * std::get<0>(seg_1_a) );
   float b2 = std::get<1>(seg_2_a) - ( A1 * std::get<0>(seg_2_a) );
   if (A1 == A2) {
@@ -151,7 +151,8 @@ bool Game::VertecesToVerteces(
   float Xa = (b2 - b1) / (A1 - A2);
   if (
     ( Xa < std::max( std::min(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::min( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) || 
-    ( Xa > std::min( std::max(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::max( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) ) {
+    ( Xa > std::min( std::max(std::get<0>(seg_1_a),std::get<0>(seg_1_b) ), std::max( std::get<0>(seg_2_a),std::get<0>(seg_2_b) ) ) ) 
+  ) {
     return false;
   } else {
     return true;

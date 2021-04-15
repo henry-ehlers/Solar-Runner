@@ -27,7 +27,7 @@ class Game {
   // Check for collissions
   bool CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship);
   bool CheckAllVertices(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship);
-  bool VertecesToVerteces(std::vector<std::tuple<int,int>> a, std::vector<std::tuple<int,int>> b);
+  bool CheckTwoVertices(std::tuple<int,int> seg_1_a, std::tuple<int,int> seg_1_b, std::tuple<int,int> seg_2_a, std::tuple<int,int> seg_2_b);
   
  private:
   
