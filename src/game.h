@@ -72,7 +72,7 @@ class Game {
     this->default_meteor_speed = ((-10)/(this->score + 2)) + 6; 
   };
   void UpdateMeteorSize()  { 
-    this->default_meteor_size = ((-10)/(this->score + 2)) + 10; 
+    this->default_meteor_size = ((-10)/(this->score + 2)) + 7; 
   };
 };
 
