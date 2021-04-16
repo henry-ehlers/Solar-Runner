@@ -6,7 +6,7 @@ This is my reposity of the final / capstone project of the Udacity "C++ Develope
 
 The game's logic was built from scratch, with game play inspired by games such as the bullet-hell classic "Solar Striker" for the original GameBoy (which also inspired the name of this project), and the minimal geometric arcade classic "Asteroids". It was build to showcase some of the key tools learned during the Nanodegree itself, such as Object-Oriented Programming, Control-flows, and Memory Management. Concurrency was not implemented (yet) owing to time constraints.
 
-The goal of the game itself is very straight-forward: dodge the incoming meteors. Each meteor dodged (that goes out of bounds) is worth 1 point. As the you accumulate points, the incoming meteors grow in size, and come at you faster. It should be noted that this difficulty curve is fairly flat, and plateaus quite quickly. In accordance with the arcade classics that inspired this game, there is no win state, only a high-score.
+The goal of the game itself is very straight-forward: dodge the incoming meteors by controlling your ship using the <left> and <right> arrow keys. Each meteor dodged (that goes out of bounds) is worth 1 point. As the you accumulate points, the incoming meteors grow in size, and come at you faster. It should be noted that this difficulty curve is fairly flat, and plateaus quite quickly. In accordance with the arcade classics that inspired this game, there is no win state, only a high-score.
 
 ## Dependencies for Local Execution
 
