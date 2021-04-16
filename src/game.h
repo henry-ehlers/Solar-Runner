@@ -24,6 +24,9 @@ class Game {
   // Main Loop
   void Run(Renderer &renderer, Controller &controller);
 
+  // Getters
+  int GetScore(){return this->score;};
+  
   // Check for collissions
   bool CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship);
   bool CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> right_1, std::tuple<int,int> left_2, std::tuple<int,int> right_2);
@@ -66,10 +69,10 @@ class Game {
   
   // 
   void UpdateMeteorSpeed() { 
-    this->default_meteor_speed = ((-10)/(this->score + 2)) + 7; 
+    this->default_meteor_speed = ((-10)/(this->score + 2)) + 6; 
   };
   void UpdateMeteorSize()  { 
-    this->default_meteor_size = ((-10)/(this->score + 2)) + 7; 
+    this->default_meteor_size = ((-10)/(this->score + 2)) + 10; 
   };
 };
 

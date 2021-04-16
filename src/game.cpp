@@ -60,9 +60,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     // SPAWN METEOR
     if ((meteors.size() <= 10) && (spawn_meteor(this->engine) == 1) && (frame_since_last_spawn == 0)) {
       meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );		// Determine meteor size
-      std::cout << "ACTUAL SIZE: " << meteor_size << "\n";
       meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );	// Determine meteor speed
-      std::cout << "ACTUAL SPEED: " << meteor_speed << "\n";
       meteor_x_location = this->meteor_x_location(this->engine);						// Determine the Meteor's location
       meteor_location = std::make_tuple(meteor_x_location, 0 - meteor_size);
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
@@ -128,10 +126,10 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   if ((2*(ship_size + meteor_size)) <= std::abs( std::get<0>(meteor_loc) - std::get<0>(ship_loc) ) || 
       (2*(ship_size + meteor_size)) <= std::abs( std::get<1>(meteor_loc) - std::get<1>(ship_loc) ) 
   ) {
-    //std::cout << "HEURISTIC PASSE\n"; 
+    std::cout << "HEURISTIC PASSE\n"; 
     return false;
   } else {
-    //std::cout << "CHECKING ALL VERTICES\n";
+    std::cout << "CHECKING ALL VERTICES\n";
     return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
   }
 };

@@ -23,6 +23,7 @@ int main() {
   Game game = Game(fps, xy_bounds);
   game.Run(renderer, controller);
 
+  //std::cout << "Final Score: " << game.GetScore() << "\n";
   std::cout << "Game has terminated successfully!\n";
   return 0;
   
