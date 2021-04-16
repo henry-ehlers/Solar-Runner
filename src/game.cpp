@@ -126,10 +126,10 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
   if ((2*(ship_size + meteor_size)) <= std::abs( std::get<0>(meteor_loc) - std::get<0>(ship_loc) ) || 
       (2*(ship_size + meteor_size)) <= std::abs( std::get<1>(meteor_loc) - std::get<1>(ship_loc) ) 
   ) {
-    std::cout << "HEURISTIC PASSE\n"; 
+    //std::cout << "HEURISTIC PASSE\n"; 
     return false;
   } else {
-    std::cout << "CHECKING ALL VERTICES\n";
+    //std::cout << "CHECKING ALL VERTICES\n";
     return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
   }
 };
