@@ -88,7 +88,8 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     // CHECK FOR COLLISSION
     if (size(meteors) >= 1) {
       for (std::unique_ptr<Meteor> &meteor : meteors) {
-        if (CheckCollision(meteor, ship)) {
+        std::cout << meteor.get() << "\n";
+        if (CheckCollision(meteor, this->ship)) {
           return;
         }
       }
@@ -117,50 +118,23 @@ void Game::Run(Renderer &renderer, Controller &controller) {
 bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
   std::vector<std::tuple<int,int>> ship_rect   = ship.get()   -> GetVertices();
   std::vector<std::tuple<int,int>> meteor_rect = meteor.get() -> GetVertices();
-  std::tuple<int,int> ship_loc   = ship.get()   -> GetLocation();
-  std::tuple<int,int> meteor_loc = meteor.get() -> GetLocation();
-  int ship_size   = ship.get()   -> GetSize();
-  int meteor_size = meteor.get() -> GetSize(); 
-  
-  // Heuristic Check
-  if ((2*(ship_size + meteor_size)) <= std::abs( std::get<0>(meteor_loc) - std::get<0>(ship_loc) ) || 
-      (2*(ship_size + meteor_size)) <= std::abs( std::get<1>(meteor_loc) - std::get<1>(ship_loc) ) 
-  ) {
-    //std::cout << "HEURISTIC PASSE\n"; 
-    return false;
-  } else {
-    //std::cout << "CHECKING ALL VERTICES\n";
-    return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
-  }
+  return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
 };
 
 bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> right_1, std::tuple<int,int> left_2, std::tuple<int,int> right_2) {
   
-//   std::cout << "l1.y = " << std::get<1>(left_1)  << "\n";
-//   std::cout << "r2.y = " << std::get<1>(right_2) << "\n";
-//   std::cout << "l2.y = " << std::get<1>(left_2)  << "\n";
-//   std::cout << "r1.y = " << std::get<1>(right_1) << "\n";
-  
-  // Intersection mathematics outlined here:
-  // httstd::cout << "l1.y = " << std::get<1>(left_1) << "\n";ps://www.geeksforgeeks.org/find-two-rectangles-overlap/
-  if (std::get<0>(left_1) == std::get<0>(right_1) || 
-      std::get<1>(left_1) == std::get<1>(right_2) || 
-      std::get<0>(left_2) == std::get<0>(right_2) || 
-      std::get<1>(left_2) == std::get<1>(right_2)
-     ) {
-    return false;
-  };
-  
    // If one rectangle is on left side of other
-  if (std::get<0>(left_1) >= std::get<0>(right_2) || 
-      std::get<0>(left_2) >= std::get<0>(right_1)
+  if (std::get<0>(left_1) > std::get<0>(right_2) || 
+      std::get<0>(left_2) > std::get<0>(right_1)
      ) {
+    std::cout << "FALSE 2\n";
     return false;
   };
   
   // If one rectangle is above other
-  if (std::get<1>(left_1) >= std::get<1>(right_2) || 
-      std::get<1>(left_2) >= std::get<1>(right_1)) {
+  if (std::get<1>(left_1) > std::get<1>(right_2) || 
+      std::get<1>(left_2) > std::get<1>(right_1)) {
+    std::cout << "FALSE 3\n";
     return false;
   };
   
