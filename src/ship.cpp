@@ -15,24 +15,29 @@ Ship::Ship(const std::tuple<int,int> xy_bounds) : nose_angle(30 * 0.0174533), sh
   this->SetShipWing();
   this->SetShipBase();
   this->InitializeVertices();
-  this->InitializeHitbox();
 };
 
 void Ship::InitializeVertices() {
-  this->vertices.push_back(this->SetShipNose());
-  this->vertices.push_back(this->SetShipRtip());
-  this->vertices.push_back(this->SetShipLtip());
-}
-
-void Ship::InitializeHitbox() {
-  std::tuple<int,int> top_point    = vertices[0];
-  std::tuple<int,int> bottom_right = vertices[1];
-  std::tuple<int,int> bottom_left  = vertices[2];
+  std::tuple<int,int> top_point    = this->SetShipNose();
+  std::tuple<int,int> bottom_right = this->SetShipRtip();
+  std::tuple<int,int> bottom_left  = this->SetShipLtip();
   
-  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_left ), std::get<1>(top_point) ) );
-  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(top_point) ) );
-  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(bottom_right) ) );
-  this->hurtbox.push_back( std::make_tuple( std::get<0>(bottom_left ), std::get<1>(bottom_left ) ) );
+  std::cout << "TOP: " << std::get<0>(top_point) << " " << std::get<1>(top_point) << "\n";
+  std::cout << "TOP: " << std::get<0>(bottom_right) << " " << std::get<1>(bottom_right) << "\n";
+  std::cout << "TOP: " << std::get<0>(bottom_left) << " " << std::get<1>(bottom_left) << "\n";
+  
+  this->vertices.push_back( std::make_tuple( std::get<0>(bottom_left), std::get<1>(top_point) ) );
+  std::cout << "TL: " << std::get<0>(bottom_left) << " " << std::get<1>(top_point) << "\n";
+  
+  this->vertices.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(top_point) ) );
+  std::cout << "TR: " <<  std::get<0>(bottom_right) << " " << std::get<1>(top_point) << "\n";
+  
+  this->vertices.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(bottom_right) ) );
+  std::cout << "BR: " << std::get<0>(bottom_right) << " " << std::get<1>(bottom_right) << "\n";
+  
+  this->vertices.push_back( std::make_tuple( std::get<0>(bottom_left), std::get<1>(bottom_left) ) );
+  std::cout << "BL: " << std::get<0>(bottom_left) << " " << std::get<1>(bottom_left ) << "\n";
+  
 }
 
 // Calculate the Location of the Ship's nose based on x/y and height
@@ -65,7 +70,7 @@ void Ship::SetShipBase(){
 //
 void Ship::BankLeft() {
   //std::cout << "BANK LEFT: \n";
-  if (std::get<0>(vertices[2]) >= (0+20) ) {
+  if (std::get<0>(vertices[0]) >= (0+20) ) {
     UpdateInformation((-speed));
   } else {
     std::cout << "Something is wrong on the left\n";

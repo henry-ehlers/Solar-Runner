@@ -121,6 +121,10 @@ void Game::Run(Renderer &renderer, Controller &controller) {
 bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
   std::vector<std::tuple<int,int>> ship_rect   = ship.get()   -> GetVertices();
   std::vector<std::tuple<int,int>> meteor_rect = meteor.get() -> GetVertices();
+  
+  std::cout << "LENGTH OF HURTBOX: " << size(ship_rect)   << "\n";
+  std::cout << "LENGTH OF METEOR:  " << size(meteor_rect) << "\n";
+  
   return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
   
 //   // Heuristic Check
@@ -134,15 +138,16 @@ bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship>
 //   }
 };
 
-
 bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> right_1, std::tuple<int,int> left_2, std::tuple<int,int> right_2) {
+  
   // Intersection mathematics outlined here:
   // https://www.geeksforgeeks.org/find-two-rectangles-overlap/
   if (std::get<0>(left_1) == std::get<0>(right_1) || 
-      std::get<1>(left_1) == std::get<0>(right_2) || 
+      std::get<1>(left_1) == std::get<1>(right_2) || 
       std::get<0>(left_2) == std::get<0>(right_2) || 
       std::get<1>(left_2) == std::get<1>(right_2)
      ) {
+    std::cout << "FALSE 1\n";
     return false;
   };
   
@@ -150,14 +155,17 @@ bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> ri
   if (std::get<0>(left_1) >= std::get<0>(right_2) || 
       std::get<0>(left_2) >= std::get<0>(right_1)
      ) {
+    std::cout << "FALSE 2\n";
     return false;
   };
   
   // If one rectangle is above other
   if (std::get<1>(left_1) <= std::get<1>(right_2) || 
       std::get<1>(left_2) <= std::get<1>(right_1)) {
+    std::cout << "FALSE 3\n";
     return false;
-  }
-    
+  };
+  
+  std::cout << "TRUE\n";
   return true;
 };

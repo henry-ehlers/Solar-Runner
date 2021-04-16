@@ -49,7 +49,7 @@ void Renderer::ClearScreen() {
 std::unique_ptr<Ship> Renderer::RenderObject(std::unique_ptr<Ship> object) {
   
   //Setting the actual draw color.
-  SDL_SetRenderDrawColor(this->sdl_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(this->sdl_renderer, 220, 20, 60, SDL_ALPHA_OPAQUE);
   
   // Get The necessary tuples
   std::vector<std::tuple<int,int>> vertices = object.get()->GetVertices();
