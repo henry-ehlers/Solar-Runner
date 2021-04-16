@@ -18,6 +18,7 @@ public:
   // Getters
   std::tuple<int,int> GetLocation(){return(this->location);}
   int GetUpperY(){return(std::get<1>(this->location) - this->size);}
+  int GetSize(){return this->size;};
   
 protected:
   

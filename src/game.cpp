@@ -1,3 +1,4 @@
+
 #include "game.h"
 #include "ship.h"
 
@@ -38,7 +39,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
   this->score = 0;
   
   // Initialize Meteor Variables
-  this->meteor_spawn_speed = 120;
+  this->meteor_spawn_speed = 60;
   int frame_since_last_spawn = 1;
   std::tuple<int,int> meteor_location;
   int meteor_x_location;
@@ -57,7 +58,7 @@ void Game::Run(Renderer &renderer, Controller &controller) {
    	UpdateMeteorSize();
     
     // SPAWN METEOR
-    if ((meteors.size() <= 1) && (spawn_meteor(this->engine) == 1) && (frame_since_last_spawn == 0)) {
+    if ((meteors.size() <= 10) && (spawn_meteor(this->engine) == 1) && (frame_since_last_spawn == 0)) {
       meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
       meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
 //       while (true)  {
@@ -121,33 +122,37 @@ void Game::Run(Renderer &renderer, Controller &controller) {
 bool Game::CheckCollision(std::unique_ptr<Meteor> &meteor, std::unique_ptr<Ship> &ship) {
   std::vector<std::tuple<int,int>> ship_rect   = ship.get()   -> GetVertices();
   std::vector<std::tuple<int,int>> meteor_rect = meteor.get() -> GetVertices();
+  std::tuple<int,int> ship_loc   = ship.get()   -> GetLocation();
+  std::tuple<int,int> meteor_loc = meteor.get() -> GetLocation();
+  int ship_size   = ship.get()   -> GetSize();
+  int meteor_size = meteor.get() -> GetSize(); 
   
-  std::cout << "LENGTH OF HURTBOX: " << size(ship_rect)   << "\n";
-  std::cout << "LENGTH OF METEOR:  " << size(meteor_rect) << "\n";
-  
-  return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
-  
-//   // Heuristic Check
-//   if (20 <= std::abs( std::get<0>(met_loc) - std::get<0>(ship_loc) ) || 
-//       20 <= std::abs( std::get<1>(met_loc) - std::get<1>(ship_loc) ) 
-//   ) {
-//     return false;
-//   } else {
-//     std::cout << "CHECKING ALL VERTICES\n";
-//     return CheckAllVertices(meteor, ship);
-//   }
+  // Heuristic Check
+  if ((2*(ship_size + meteor_size)) <= std::abs( std::get<0>(meteor_loc) - std::get<0>(ship_loc) ) || 
+      (2*(ship_size + meteor_size)) <= std::abs( std::get<1>(meteor_loc) - std::get<1>(ship_loc) ) 
+  ) {
+    //std::cout << "HEURISTIC PASSE\n"; 
+    return false;
+  } else {
+    //std::cout << "CHECKING ALL VERTICES\n";
+    return CheckTwoRectangles( ship_rect[0], ship_rect[2], meteor_rect[0], meteor_rect[2] );
+  }
 };
 
 bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> right_1, std::tuple<int,int> left_2, std::tuple<int,int> right_2) {
   
+//   std::cout << "l1.y = " << std::get<1>(left_1)  << "\n";
+//   std::cout << "r2.y = " << std::get<1>(right_2) << "\n";
+//   std::cout << "l2.y = " << std::get<1>(left_2)  << "\n";
+//   std::cout << "r1.y = " << std::get<1>(right_1) << "\n";
+  
   // Intersection mathematics outlined here:
-  // https://www.geeksforgeeks.org/find-two-rectangles-overlap/
+  // httstd::cout << "l1.y = " << std::get<1>(left_1) << "\n";ps://www.geeksforgeeks.org/find-two-rectangles-overlap/
   if (std::get<0>(left_1) == std::get<0>(right_1) || 
       std::get<1>(left_1) == std::get<1>(right_2) || 
       std::get<0>(left_2) == std::get<0>(right_2) || 
       std::get<1>(left_2) == std::get<1>(right_2)
      ) {
-    std::cout << "FALSE 1\n";
     return false;
   };
   
@@ -155,17 +160,14 @@ bool Game::CheckTwoRectangles(std::tuple<int,int> left_1, std::tuple<int,int> ri
   if (std::get<0>(left_1) >= std::get<0>(right_2) || 
       std::get<0>(left_2) >= std::get<0>(right_1)
      ) {
-    std::cout << "FALSE 2\n";
     return false;
   };
   
   // If one rectangle is above other
-  if (std::get<1>(left_1) <= std::get<1>(right_2) || 
-      std::get<1>(left_2) <= std::get<1>(right_1)) {
-    std::cout << "FALSE 3\n";
+  if (std::get<1>(left_1) >= std::get<1>(right_2) || 
+      std::get<1>(left_2) >= std::get<1>(right_1)) {
     return false;
   };
   
-  std::cout << "TRUE\n";
   return true;
 };

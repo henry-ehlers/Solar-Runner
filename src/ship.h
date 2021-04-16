@@ -26,6 +26,7 @@ public:
   void InitializeVertices();
   
   // Getters
+  int GetSize(){return this->ship_length;};
   
   // Update based on player input
   void BankLeft();

@@ -18,26 +18,16 @@ Ship::Ship(const std::tuple<int,int> xy_bounds) : nose_angle(30 * 0.0174533), sh
 };
 
 void Ship::InitializeVertices() {
+  // Calculate the points of a theoretical triangle first ()
   std::tuple<int,int> top_point    = this->SetShipNose();
   std::tuple<int,int> bottom_right = this->SetShipRtip();
   std::tuple<int,int> bottom_left  = this->SetShipLtip();
-  
-  std::cout << "TOP: " << std::get<0>(top_point) << " " << std::get<1>(top_point) << "\n";
-  std::cout << "TOP: " << std::get<0>(bottom_right) << " " << std::get<1>(bottom_right) << "\n";
-  std::cout << "TOP: " << std::get<0>(bottom_left) << " " << std::get<1>(bottom_left) << "\n";
-  
+  // Calculate rectangle based on triangle 
   this->vertices.push_back( std::make_tuple( std::get<0>(bottom_left), std::get<1>(top_point) ) );
-  std::cout << "TL: " << std::get<0>(bottom_left) << " " << std::get<1>(top_point) << "\n";
-  
   this->vertices.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(top_point) ) );
-  std::cout << "TR: " <<  std::get<0>(bottom_right) << " " << std::get<1>(top_point) << "\n";
-  
   this->vertices.push_back( std::make_tuple( std::get<0>(bottom_right), std::get<1>(bottom_right) ) );
-  std::cout << "BR: " << std::get<0>(bottom_right) << " " << std::get<1>(bottom_right) << "\n";
-  
   this->vertices.push_back( std::make_tuple( std::get<0>(bottom_left), std::get<1>(bottom_left) ) );
-  std::cout << "BL: " << std::get<0>(bottom_left) << " " << std::get<1>(bottom_left ) << "\n";
-  
+
 }
 
 // Calculate the Location of the Ship's nose based on x/y and height

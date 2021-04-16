@@ -67,11 +67,11 @@ class Game {
   // 
   void UpdateMeteorSpeed() { 
     default_meteor_speed = ((-10)/(this->score + 2)) + 7; 
-    //std::cout << "METEOR SPEED: " << meteor_spawn_speed << "\n";
+    std::cout << "DEFAULT METEOR SPEED: " << meteor_spawn_speed << "\n";
   };
   void UpdateMeteorSize()  { 
     default_meteor_size = ((-10)/(this->score + 2)) + 7; 
-    //std::cout << "METEOR SPEED: " << meteor_spawn_speed << "\n";
+    std::cout << "DEFAULT METEOR SIZE: " << meteor_spawn_speed << "\n";
   };
 };
 
