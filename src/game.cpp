@@ -59,14 +59,11 @@ void Game::Run(Renderer &renderer, Controller &controller) {
     
     // SPAWN METEOR
     if ((meteors.size() <= 10) && (spawn_meteor(this->engine) == 1) && (frame_since_last_spawn == 0)) {
-      meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );
-      meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );
-//       while (true)  {
-//         meteor_x_location = this->meteor_x_location(this->engine);
-//         break;
-//       };
-      meteor_x_location = 320/2;
-      // Determine the Meteor's location
+      meteor_size  = this->default_meteor_size + this->meteor_size( this->engine );		// Determine meteor size
+      std::cout << "ACTUAL SIZE: " << meteor_size << "\n";
+      meteor_speed = this->default_meteor_speed + this->meteor_speed( this->engine );	// Determine meteor speed
+      std::cout << "ACTUAL SPEED: " << meteor_speed << "\n";
+      meteor_x_location = this->meteor_x_location(this->engine);						// Determine the Meteor's location
       meteor_location = std::make_tuple(meteor_x_location, 0 - meteor_size);
       meteors.push_back(std::make_unique<Meteor>(meteor_location, meteor_size, meteor_speed));
       frame_since_last_spawn = this->meteor_spawn_speed;
